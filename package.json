@@ -1,0 +1,22 @@
+{
+  "name": "jupiter",
+  "version": "1.0.0",
+  "description": "A socially competitive site.",
+  "main": "cloudinary.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamdp/jupiter.git"
+  },
+  "author": "Jupiter Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iamdp/jupiter/issues"
+  },
+  "homepage": "https://github.com/iamdp/jupiter#readme",
+  "dependencies": {
+    "cloudinary": "^1.11.0"
+  }
+}
