@@ -8,9 +8,9 @@
   - David Pham
   - Vishnu Swaminathan
 
-## Concept: A Social Competitive Site
+## Concept: A socially competitive site
 
-Vote left or right to determine the best.
+A website built for the socially opiniated masses. 
 
 ### Branch: Cloudinary
 
