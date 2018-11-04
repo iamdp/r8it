@@ -13,7 +13,8 @@ const User = mongoose.model("User", userSchema);
 // Challenge Schema
 const challengeSchema = mongoose.Schema({
   verb: { type: String, required: true, trim: true, lowercase: true },
-  noun: { type: String, required: true, trim: true, lowercase: true }
+  noun: { type: String, required: true, trim: true, lowercase: true },
+  dateCreated: { type: Date, default: Date.now }
 });
 
 const Challenge = mongoose.model("Challenge", challengeSchema);
