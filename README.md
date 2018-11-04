@@ -10,7 +10,7 @@
 
 ## Concept: A socially competitive site
 
-A website built for the socially opiniated masses.
+A website built for the socially opiniated.
 
 ## Starting the app locally
 
