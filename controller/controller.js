@@ -15,7 +15,7 @@ mongoose.connect(
   { useNewUrlParser: true }
 );
 
-const queries = {
+module.exports = {
   queryPost: function() {
     db.Post.find({})
       .populate("userId")
@@ -67,12 +67,18 @@ const queries = {
               .skip(random)
               .limit(2)
               .exec(async function(err, posts) {
-                cb({ challenge, posts });
+                cb({
+                  challenge,
+                  posts
+                });
               });
           });
         });
     });
+  },
+
+  saveResult: function(result, cb) {
+    new db.Rating(result).save();
+    cb({ result });
   }
 };
-
-queries.getComparables(result => console.log(result));
