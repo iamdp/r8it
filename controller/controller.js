@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const db = require("../models/models");
 
 const cloudinary = require("cloudinary");
-const config = require("./config.json");
+const config = require("../config.json");
 
 cloudinary.config({
   cloud_name: config.cloudinary.cloud_name,
@@ -52,9 +52,27 @@ const queries = {
     );
   },
 
-  getComparables: function() {
-    db.Post.find().limit(2);
+  getComparables: function(cb) {
+    let random;
+    db.Challenge.countDocuments().exec(function(err, count) {
+      random = Math.floor(Math.random() * (count - 2)) + 0;
+
+      db.Challenge.findOne()
+        .skip(random)
+        .exec(function(err, challenge) {
+          db.Post.countDocuments().exec(function(err, count) {
+            random = Math.floor(Math.random() * (count - 2)) + 0;
+
+            db.Post.find()
+              .skip(random)
+              .limit(2)
+              .exec(async function(err, posts) {
+                cb({ challenge, posts });
+              });
+          });
+        });
+    });
   }
 };
 
-queries.getPosts();
+queries.getComparables(result => console.log(result));
