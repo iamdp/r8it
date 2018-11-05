@@ -78,6 +78,12 @@ module.exports = {
   },
 
   saveResult: function(result, cb) {
+    db.Post.findByIdAndUpdate(result.pickedPostId, {
+      $inc: { eloRank: 1 }
+    }).exec((err, res) => {
+      console.log(err, res);
+    });
+
     new db.Rating(result).save();
     cb({ result });
   }
