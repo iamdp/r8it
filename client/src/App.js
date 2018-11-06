@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Posts from "./components/Posts";
-import Challenge from "./components/Challenge";
-import Submit from "./components/Submit";
+import Posts from "./components/posts";
+import Challenge from "./components/challenge";
+import Submit from "./components/submit";
 
 class App extends Component {
   render() {
