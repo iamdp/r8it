@@ -1,0 +1,29 @@
+.posts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 920px;
+  margin: 20px;
+}
+
+.post {
+  margin: 5px;
+  background-color: whitesmoke;
+
+  text-align: left;
+
+  box-shadow: 4px 4px 3px;
+}
+
+.refresh {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: 30px;
+  width: 880px;
+  margin-left: 40px;
+  margin-bottom: 20px;
+}
+
+.refresh button {
+  width: 100%;
+}

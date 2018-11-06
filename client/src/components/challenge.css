@@ -1,0 +1,26 @@
+.category-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  width: 920px;
+  margin: 0px 20px;
+
+  background-color: whitesmoke;
+}
+
+.challenge {
+  display: flex;
+}
+
+.polariod {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 440px;
+  width: 440px;
+  margin: 20px;
+  background-color: whitesmoke;
+
+  box-shadow: 4px 4px 3px;
+}
