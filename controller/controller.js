@@ -78,5 +78,5 @@ module.exports = {
     new db.Rating(result).save();
     cb({ result });
   }
-  // ******* START: Challenge Functionality *******
+  // ******* END: Challenge Functionality *******
 };
