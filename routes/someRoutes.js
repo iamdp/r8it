@@ -2,6 +2,10 @@ const router = require("express").Router();
 
 const controller = require("../controller/controller");
 
+router.get("/getPosts", (req, res) => {
+  controller.getPosts(result => res.send(result));
+});
+
 router.get("/getComparables", (req, res) => {
   controller.getComparables(result => res.send(result));
 });

@@ -16,32 +16,12 @@ mongoose.connect(
 );
 
 module.exports = {
-  queryPost: function() {
-    db.Post.find({})
-      .populate("userId")
-      .exec((err, docs) => console.log(docs));
-  },
-
-  queryRating: function() {
-    db.Rating.find()
-      .gte("dateCreated", new Date(2017, 01, 01))
-      .populate({ path: "pickedPostId", select: "title" })
-      .exec((err, docs) => console.log(docs));
-  },
-
-  queryRating2: function() {
-    db.Rating.find()
-      .gte("dateCreated", new Date(2017, 01, 01))
-      .populate("title")
-      .exec((err, docs) => console.log(docs));
-  },
-
-  getPosts: function() {
+  getPosts: function(cb) {
     db.Post.find()
-      .limit(2)
+      .limit(20)
       .sort("-eloRank")
       .exec((err, posts) => {
-        console.log(posts);
+        cb(posts);
       });
   },
 
@@ -52,27 +32,38 @@ module.exports = {
     );
   },
 
+  // ******* START: Challenge Functionality *******
   getComparables: function(cb) {
     let random;
-    db.Challenge.countDocuments().exec(function(err, count) {
-      random = Math.floor(Math.random() * (count - 2)) + 0;
 
+    // Figure out how many # of challenges there are.
+    db.Challenge.countDocuments().exec(function(err, count) {
+      // Generate a random number to pick a random valid challenge.
+      random = Math.floor(Math.random() * count);
+
+      // Use the random # to pick a random challenge
       db.Challenge.findOne()
         .skip(random)
         .exec(function(err, challenge) {
-          db.Post.countDocuments().exec(function(err, count) {
-            random = Math.floor(Math.random() * (count - 2)) + 0;
+          // Using the challenge specified above, find two random posts
 
-            db.Post.find()
-              .skip(random)
-              .limit(2)
-              .exec(async function(err, posts) {
-                cb({
-                  challenge,
-                  posts
+          // DB Currently does not have sufficient data to reliably server two posts in the same challenge, increase data, then run.
+          db.Post.find({ challengeId: challenge._id })
+            //db.Post.find()
+            .countDocuments()
+            .exec(function(err, count) {
+              random = Math.floor(Math.random() * (count - 2));
+
+              db.Post.find({ challengeId: challenge._id })
+                .skip(random)
+                .limit(2)
+                .exec(function(err, posts) {
+                  cb({
+                    challenge,
+                    posts
+                  });
                 });
-              });
-          });
+            });
         });
     });
   },
@@ -87,4 +78,5 @@ module.exports = {
     new db.Rating(result).save();
     cb({ result });
   }
+  // ******* START: Challenge Functionality *******
 };

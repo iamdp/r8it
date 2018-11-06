@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Posts from "./components/Posts";
 import Challenge from "./components/Challenge";
+import Submit from "./components/Submit";
 
 class App extends Component {
   render() {
@@ -8,6 +9,7 @@ class App extends Component {
       <div className="App">
         <Posts />
         <Challenge />
+        <Submit />
       </div>
     );
   }
