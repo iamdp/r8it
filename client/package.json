@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://localhost:4000/",
   "engines": {
+    "node": "10.12.0",
     "yarn": "1.12.1"
   },
   "dependencies": {
