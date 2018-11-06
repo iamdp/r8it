@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:4000/",
+  "engines": {
+    "yarn": "1.12.1"
+  },
   "dependencies": {
     "axios": "^0.18.0",
     "react": "^16.0.0",
