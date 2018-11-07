@@ -1,0 +1,4 @@
+{"_id":{"$oid":"5be04e8c371f88ce89bf0919"},"verb":"furriest","noun":"dog","dateCreated":{"$date":{"$numberLong":"1541426828639"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5be04e8c371f88ce89bf091a"},"verb":"highest","noun":"ollie","dateCreated":{"$date":{"$numberLong":"1541426828639"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5be04e8c371f88ce89bf091b"},"verb":"tastiest","noun":"ginerbread house","dateCreated":{"$date":{"$numberLong":"1541426828640"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5be1c10dfe2ea9572c4c4563"},"verb":"best","noun":"origami house","dateCreated":{"$date":{"$numberLong":"1541548800000"}}}
