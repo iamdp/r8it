@@ -44,8 +44,18 @@ class Challenge extends React.Component {
     } else if (!this.state.posts || this.state.posts.length <= 1) {
       return (
         <div>
-          Bleeding edge here - probably not 2 challenges.
-          <button onClick={this.handleClick}>Click here to try again.</button>
+          <p>
+            The {this.state.challenge.verb} {this.state.challenge.noun} has less
+            than two posts.
+          </p>
+          <p>
+            Contribute to this challenge category by clicking{" "}
+            <button>here</button> or
+          </p>
+          <p>
+            Click <button onClick={this.handleClick}>here</button> for another
+            random challenge cateogry.
+          </p>
         </div>
       );
     } else {
