@@ -22,8 +22,8 @@ class Challenge extends React.Component {
       method: "POST",
       url: "/api/saveResult",
       data: {
-        pickedPostId: event.target.getAttribute("data-challenger"),
-        unpickedPostId: event.target.getAttribute("data-challengee"),
+        challenger: event.target.getAttribute("data-challenger"),
+        challengee: event.target.getAttribute("data-challengee"),
         userId
       }
     }).then(response => {

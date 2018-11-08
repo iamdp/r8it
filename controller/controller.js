@@ -51,8 +51,19 @@ module.exports = {
   },
 
   saveResult: function(result, cb) {
-    db.Post.findByIdAndUpdate(result.pickedPostId, {
+    // Increments picked post eloRank by +1
+    db.Post.findByIdAndUpdate(result.challenger, {
       $inc: { eloRank: 1 }
+    }).exec((err, res) => {
+      console.log(err, res);
+    });
+
+    new db.Rating(result).save();
+    cb({ result });
+
+    // Decrements unpicked post eloRank by 01
+    db.Post.findByIdAndUpdate(result.challengee, {
+      $inc: { eloRank: -1 }
     }).exec((err, res) => {
       console.log(err, res);
     });
