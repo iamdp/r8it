@@ -15,6 +15,13 @@ mongoose.connect(
   { useNewUrlParser: true }
 );
 
+function getCloudinaryUrl(cloudinaryRef) {
+  return cloudinary.url(
+    cloudinaryRef,
+    config.cloudinary.standardTransformation
+  );
+}
+
 module.exports = {
   getPosts: function(cb) {
     db.Post.find()
@@ -25,46 +32,21 @@ module.exports = {
       });
   },
 
-  getCloudinaryUrl: function(cloudinaryRef) {
-    return cloudinary.url(
-      cloudinaryRef,
-      config.cloudinary.standardTransformation
-    );
-  },
-
-  // ******* START: Challenge Functionality *******
+  // ******* Challenge Functionality *******
   getComparables: function(cb) {
-    let random;
-
-    // Figure out how many # of challenges there are.
-    db.Challenge.countDocuments().exec(function(err, count) {
-      // Generate a random number to pick a random valid challenge.
-      random = Math.floor(Math.random() * count);
-
-      // Use the random # to pick a random challenge
-      db.Challenge.findOne()
-        .skip(random)
-        .exec(function(err, challenge) {
-          // Using the challenge specified above, find two random posts
-
-          // DB Currently does not have sufficient data to reliably server two posts in the same challenge, increase data, then run.
-          db.Post.find({ challengeId: challenge._id })
-            //db.Post.find()
-            .countDocuments()
-            .exec(function(err, count) {
-              random = Math.floor(Math.random() * (count - 2));
-
-              db.Post.find({ challengeId: challenge._id })
-                .skip(random)
-                .limit(2)
-                .exec(function(err, posts) {
-                  cb({
-                    challenge,
-                    posts
-                  });
-                });
-            });
+    // Pick a random challenge, pick 2 random posts from that challenge category then return the results
+    db.Challenge.aggregate([{ $sample: { size: 1 } }]).then(challenges => {
+      db.Post.aggregate([
+        { $match: { challengeId: challenges[0]._id } },
+        { $sample: { size: 2 } }
+      ]).then(posts => {
+        console.log(challenges[0], posts);
+        // Creating a property on the post object that adds the cloudinary url
+        posts.forEach(post => {
+          post.cloudinaryUrl = getCloudinaryUrl(post.cloudinaryRef);
         });
+        cb({ challenge: challenges[0], posts });
+      });
     });
   },
 
@@ -78,5 +60,5 @@ module.exports = {
     new db.Rating(result).save();
     cb({ result });
   }
-  // ******* END: Challenge Functionality *******
+  // ******* Challenge Functionality *******
 };
