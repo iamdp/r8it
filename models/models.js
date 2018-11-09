@@ -38,8 +38,8 @@ const Post = mongoose.model("Post", postSchema);
 
 // Rating Schema
 const ratingSchema = mongoose.Schema({
-  pickedPostId: { type: mongoose.Types.ObjectId, ref: "Post", required: true },
-  unpickedPostId: {
+  challenger: { type: mongoose.Types.ObjectId, ref: "Post", required: true },
+  challengee: {
     type: mongoose.Types.ObjectId,
     ref: "Post",
     required: true

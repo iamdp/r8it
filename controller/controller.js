@@ -5,14 +5,14 @@ const cloudinary = require("cloudinary");
 const config = require("../config.json");
 
 cloudinary.config({
-	cloud_name: config.cloudinary.cloud_name,
-	api_key: config.cloudinary.api_key,
-	api_secret: config.cloudinary.api_secret
+  cloud_name: config.cloudinary.cloud_name,
+  api_key: config.cloudinary.api_key,
+  api_secret: config.cloudinary.api_secret
 });
 
 mongoose.connect(
-	process.env.MONGODB_URI || "mongodb://localhost:27017/r8it",
-	{ useNewUrlParser: true }
+  process.env.MONGODB_URI || "mongodb://localhost:27017/r8it",
+  { useNewUrlParser: true }
 );
 
 function getCloudinaryUrl(cloudinaryRef) {
@@ -23,27 +23,27 @@ function getCloudinaryUrl(cloudinaryRef) {
 }
 
 module.exports = {
-	getCategories: function(cb) {
-		db.Challenge.find().exec((err, posts) => {
-			cb(posts);
-		});
-	},
+  getCategories: function(cb) {
+    db.Challenge.find().exec((err, posts) => {
+      cb(posts);
+    });
+  },
 
-	getPosts: function(cb) {
-		db.Post.find()
-			.limit(20)
-			.sort("-eloRank")
-			.exec((err, posts) => {
-				cb(posts);
-			});
-	},
+  getPosts: function(cb) {
+    db.Post.find()
+      .limit(20)
+      .sort("-eloRank")
+      .exec((err, posts) => {
+        cb(posts);
+      });
+  },
 
-	getCloudinaryUrl: function(cloudinaryRef) {
-		return cloudinary.url(
-			cloudinaryRef,
-			config.cloudinary.standardTransformation
-		);
-	},
+  getCloudinaryUrl: function(cloudinaryRef) {
+    return cloudinary.url(
+      cloudinaryRef,
+      config.cloudinary.standardTransformation
+    );
+  },
 
   // ******* Challenge Functionality *******
   getComparables: function(cb) {
@@ -53,7 +53,6 @@ module.exports = {
         { $match: { challengeId: challenges[0]._id } },
         { $sample: { size: 2 } }
       ]).then(posts => {
-        console.log(challenges[0], posts);
         // Creating a property on the post object that adds the cloudinary url
         posts.forEach(post => {
           post.cloudinaryUrl = getCloudinaryUrl(post.cloudinaryRef);
@@ -62,16 +61,24 @@ module.exports = {
       });
     });
   },
-    
-    	saveResult: function(result, cb) {
-		db.Post.findByIdAndUpdate(result.pickedPostId, {
-			$inc: { eloRank: 1 }
-		}).exec((err, res) => {
-			console.log(err, res);
-		});
 
-		new db.Rating(result).save();
-		cb({ result });
-	}
+  saveResult: function(result, cb) {
+    // Update winning post
+    db.Post.findByIdAndUpdate(result.challenger, {
+      $inc: { eloRank: 1 }
+    }).exec((err, res) => {
+      if (err) console.log(err);
+
+      // Update losing post
+      db.Post.findByIdAndUpdate(result.challengee, {
+        $inc: { eloRank: -1 }
+      }).exec((err, res) => {
+        if (err) console.log(err);
+      });
+    });
+
+    new db.Rating(result).save();
+    cb({ result });
+  }
   // ******* Challenge Functionality *******
 };
