@@ -13,17 +13,7 @@ class Challenge extends React.Component {
   }
 
   handleClick = event => {
-    let unpickedPostId;
-    if (event.target.parentElement.nextSibling) {
-      unpickedPostId = event.target.parentElement.nextSibling.firstChild.getAttribute(
-        "data-postid"
-      );
-    } else {
-      unpickedPostId = event.target.parentElement.previousSibling.firstChild.getAttribute(
-        "data-postid"
-      );
-    }
-
+    // Assign the userId here once feature if available
     let userId = this.state.userId
       ? this.state.userId
       : "5be04cee9971c8c18da3c1cc";
@@ -32,8 +22,8 @@ class Challenge extends React.Component {
       method: "POST",
       url: "/api/saveResult",
       data: {
-        pickedPostId: event.target.getAttribute("data-postid"),
-        unpickedPostId,
+        challenger: event.target.getAttribute("data-challenger"),
+        challengee: event.target.getAttribute("data-challengee"),
         userId
       }
     }).then(response => {
@@ -48,11 +38,26 @@ class Challenge extends React.Component {
     if (!this.state.challenge) {
       return (
         <div>
-          <p>Coming right up!</p>
+          <p>Hold on a moment, forgot to tie our shoes!</p>
         </div>
       );
     } else if (!this.state.posts || this.state.posts.length <= 1) {
-      return <div>Bleeding edge here - probably not 2 challenges.</div>;
+      return (
+        <div>
+          <p>
+            The {this.state.challenge.verb} {this.state.challenge.noun} has less
+            than two posts.
+          </p>
+          <p>
+            Contribute to this challenge category by clicking{" "}
+            <button>here</button> or
+          </p>
+          <p>
+            Click <button onClick={this.handleClick}>here</button> for another
+            random challenge cateogry.
+          </p>
+        </div>
+      );
     } else {
       return (
         <div>
@@ -68,7 +73,8 @@ class Challenge extends React.Component {
             <div className="polariod">
               <img
                 alt={this.state.posts[0].title}
-                data-postid={this.state.posts[0]._id}
+                data-challenger={this.state.posts[0]._id}
+                data-challengee={this.state.posts[1]._id}
                 onClick={this.handleClick}
                 src={
                   "http://res.cloudinary.com/r8te/image/upload/bo_2px_solid_rgb:000000,c_fill,f_webp,fl_awebp,g_center,h_412,q_auto,w_400/" +
@@ -78,7 +84,8 @@ class Challenge extends React.Component {
             </div>
             <div className="polariod">
               <img
-                data-postid={this.state.posts[1]._id}
+                data-challenger={this.state.posts[1]._id}
+                data-challengee={this.state.posts[0]._id}
                 onClick={this.handleClick}
                 alt={this.state.posts[1].title}
                 src={
