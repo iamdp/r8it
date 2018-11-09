@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const db = require("../models/models");
 const dbChallengeGenerator = require("../models/challengeGenerator");
+const moment = require("moment");
 
 const cloudinary = require("cloudinary");
 const config = require("../config.json");
@@ -30,8 +31,37 @@ module.exports = {
     });
   },
 
-  getPosts: function(cb) {
-    db.Post.find()
+  getPosts: function(period, cb) {
+    let query = {};
+
+    if (period) {
+      let calculatedPeriod;
+
+      switch (period) {
+        case "24 Hours":
+          calculatedPeriod = moment().subtract(1, "days");
+          break;
+        case "Last Week":
+          calculatedPeriod = moment().subtract(1, "weeks");
+          break;
+        case "Last Month":
+          calculatedPeriod = moment().subtract(1, "months");
+          break;
+        case "Last Year":
+          calculatedPeriod = moment().subtract(1, "years");
+          break;
+        default:
+          calculatedPeriod = moment().subtract(1, "years");
+          break;
+      }
+      query = {
+        dateCreated: {
+          $gte: calculatedPeriod.toISOString()
+        }
+      };
+    }
+
+    db.Post.find(query)
       .limit(20)
       .sort("-eloRank")
       .exec((err, posts) => {

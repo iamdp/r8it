@@ -6,8 +6,11 @@ router.get("/getCategories", (req, res) => {
   controller.getCategories(result => res.send(result));
 });
 
-router.get("/getPosts", (req, res) => {
-  controller.getPosts(result => res.send(result));
+router.get("/getPosts/:period?", (req, res) => {
+  /* Valid periods include 
+    '24 Hours', 'Last Week', 'Last Month', 'Last Year'
+  */
+  controller.getPosts(req.params.period, response => res.send(response));
 });
 
 router.get("/getComparables", (req, res) => {
