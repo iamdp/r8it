@@ -5,14 +5,14 @@ const cloudinary = require("cloudinary");
 const config = require("../config.json");
 
 cloudinary.config({
-  cloud_name: config.cloudinary.cloud_name,
-  api_key: config.cloudinary.api_key,
-  api_secret: config.cloudinary.api_secret
+	cloud_name: config.cloudinary.cloud_name,
+	api_key: config.cloudinary.api_key,
+	api_secret: config.cloudinary.api_secret
 });
 
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost:27017/r8it",
-  { useNewUrlParser: true }
+	process.env.MONGODB_URI || "mongodb://localhost:27017/r8it",
+	{ useNewUrlParser: true }
 );
 
 function getCloudinaryUrl(cloudinaryRef) {
@@ -23,14 +23,27 @@ function getCloudinaryUrl(cloudinaryRef) {
 }
 
 module.exports = {
-  getPosts: function(cb) {
-    db.Post.find()
-      .limit(20)
-      .sort("-eloRank")
-      .exec((err, posts) => {
-        cb(posts);
-      });
-  },
+	getCategories: function(cb) {
+		db.Challenge.find().exec((err, posts) => {
+			cb(posts);
+		});
+	},
+
+	getPosts: function(cb) {
+		db.Post.find()
+			.limit(20)
+			.sort("-eloRank")
+			.exec((err, posts) => {
+				cb(posts);
+			});
+	},
+
+	getCloudinaryUrl: function(cloudinaryRef) {
+		return cloudinary.url(
+			cloudinaryRef,
+			config.cloudinary.standardTransformation
+		);
+	},
 
   // ******* Challenge Functionality *******
   getComparables: function(cb) {
@@ -49,27 +62,16 @@ module.exports = {
       });
     });
   },
+    
+    	saveResult: function(result, cb) {
+		db.Post.findByIdAndUpdate(result.pickedPostId, {
+			$inc: { eloRank: 1 }
+		}).exec((err, res) => {
+			console.log(err, res);
+		});
 
-  saveResult: function(result, cb) {
-    // Increments picked post eloRank by +1
-    db.Post.findByIdAndUpdate(result.challenger, {
-      $inc: { eloRank: 1 }
-    }).exec((err, res) => {
-      console.log(err, res);
-    });
-
-    new db.Rating(result).save();
-    cb({ result });
-
-    // Decrements unpicked post eloRank by 01
-    db.Post.findByIdAndUpdate(result.challengee, {
-      $inc: { eloRank: -1 }
-    }).exec((err, res) => {
-      console.log(err, res);
-    });
-
-    new db.Rating(result).save();
-    cb({ result });
-  }
+		new db.Rating(result).save();
+		cb({ result });
+	}
   // ******* Challenge Functionality *******
 };
