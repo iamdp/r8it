@@ -5,6 +5,7 @@ const app = express();
 const bodyParser = require("body-parser");
 
 const someRoutes = require("./routes/someRoutes");
+const challengeGeneratorRoutes = require("./routes/challengeGeneratorRoutes");
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
@@ -20,6 +21,7 @@ app.use(
 
 // Routes
 app.use("/api", someRoutes);
+app.use("/api", challengeGeneratorRoutes);
 
 // Send every request to the React app
 // Define any API routes before this runs
