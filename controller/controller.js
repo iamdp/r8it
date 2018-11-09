@@ -97,15 +97,12 @@ module.exports = {
   },
 
   getRandomChallenge: function(cb) {
-    console.log("here1");
     dbChallengeGenerator.ChallengeNoun.aggregate([
       { $sample: { size: 1 } }
     ]).then(noun => {
-      console.log("here2");
       dbChallengeGenerator.ChallengeVerb.aggregate([
         { $sample: { size: 1 } }
       ]).then(verb => {
-        console.log("here3");
         cb({ noun: noun[0].noun, verb: verb[0].verb });
       });
     });
