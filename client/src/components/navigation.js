@@ -1,18 +1,18 @@
 import React from "react";
+import "./navigation.css";
 
 const Navigation = () => {
   return (
-    <nav class="navbar navbar-light bg-light">
-      <a class="navbar-brand" href="#">
+    <nav className="navbar navbar-dark bg-dark">
+      <div className="navbar-brand">
         <img
-          src="/docs/4.1/assets/brand/bootstrap-solid.svg"
-          width="30"
+          src="../media/logo-r8it.png"
           height="30"
           class="d-inline-block align-top"
           alt=""
         />
-        Bootstrap
-      </a>
+        <span className="logo-text">r8it.live</span>
+      </div>
     </nav>
   );
 };
