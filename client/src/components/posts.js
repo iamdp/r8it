@@ -17,10 +17,26 @@ class Posts extends React.Component {
     });
   };
 
+  handleChange = e => {
+    axios.get("/api/getPosts/" + e.target.value).then(response => {
+      this.setState({ posts: response.data });
+    });
+  };
+
   render() {
     if (this.state.posts) {
       return (
         <div>
+          <div>
+            <select onChange={this.handleChange}>
+              <option value="Last Year" defaultValue>
+                Last Year
+              </option>
+              <option value="Last Month">Last Month</option>
+              <option value="Last Week">Last Week</option>
+              <option value="24 Hours">24 Hours</option>
+            </select>
+          </div>
           <div className="posts">
             {this.state.posts.map(value => {
               return (
