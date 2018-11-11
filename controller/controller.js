@@ -7,9 +7,9 @@ const cloudinary = require("cloudinary");
 const config = require("../config.json");
 
 cloudinary.config({
-  cloud_name: config.cloudinary.cloud_name,
-  api_key: config.cloudinary.api_key,
-  api_secret: config.cloudinary.api_secret
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET
 });
 
 mongoose.connect(
@@ -115,13 +115,15 @@ module.exports = {
 
   // ******* Challenge Generator *******
   addChallengeNoun: function(noun, cb) {
-    new dbChallengeGenerator.ChallengeNoun({ noun }).save().then(result => {
+    new dbChallengeGenerator.ChallengeNoun({ noun }).save((err, result) => {
+      if (err) console.log(err);
       cb(result);
     });
   },
 
   addChallengeVerb: function(verb, cb) {
-    new dbChallengeGenerator.ChallengeVerb({ verb }).save().then(result => {
+    new dbChallengeGenerator.ChallengeVerb({ verb }).save((err, result) => {
+      if (err) console.log(err);
       cb(result);
     });
   },
