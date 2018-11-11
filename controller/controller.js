@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const db = require("../models/models");
+const dbChallengeGenerator = require("../models/challengeGenerator");
 
 const cloudinary = require("cloudinary");
 const config = require("../config.json");
@@ -79,6 +80,32 @@ module.exports = {
 
     new db.Rating(result).save();
     cb({ result });
-  }
+  },
   // ******* Challenge Functionality *******
+
+  // ******* Challenge Generator *******
+  addChallengeNoun: function(noun, cb) {
+    new dbChallengeGenerator.ChallengeNoun({ noun }).save().then(result => {
+      cb(result);
+    });
+  },
+
+  addChallengeVerb: function(verb, cb) {
+    new dbChallengeGenerator.ChallengeVerb({ verb }).save().then(result => {
+      cb(result);
+    });
+  },
+
+  getRandomChallenge: function(cb) {
+    dbChallengeGenerator.ChallengeNoun.aggregate([
+      { $sample: { size: 1 } }
+    ]).then(noun => {
+      dbChallengeGenerator.ChallengeVerb.aggregate([
+        { $sample: { size: 1 } }
+      ]).then(verb => {
+        cb({ noun: noun[0].noun, verb: verb[0].verb });
+      });
+    });
+  }
+  // ******* Challenge Generator *******
 };
