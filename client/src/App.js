@@ -8,7 +8,7 @@ import ChallengeGenerator from "./components/challengeGenerator";
 
 class App extends Component {
 	render() {
-		return (
+	  return (
 			<div className="App">
 				<ChallengeGenerator />
 				<Catgories />
