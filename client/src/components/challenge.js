@@ -17,7 +17,7 @@ class Challenge extends React.Component {
 	}
 
 	handleClick = event => {
-		// Assign the userId here once feature if available
+		// Assign the userId here once feature if availabl
 		let userId = this.state.userId
 			? this.state.userId
 			: "5be04cee9971c8c18da3c1cc";
