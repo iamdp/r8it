@@ -1,18 +1,18 @@
 import React from "react";
-import axios from "axios";
+import API from "../utils/API";
 
 class Categories extends React.Component {
 	state = {};
 
 	componentDidMount() {
-		axios.get("/api/getCategories").then(response => {
+		API.getCategories().then(response => {
 			this.setState({ categories: response.data });
 			console.log(response.data);
 		});
 	}
 
 	handleClick = () => {
-		axios.get("/api/getCategories").then(response => {
+		API.getCategories().then(response => {
 			this.setState({ categories: response.data });
 		});
 	};
