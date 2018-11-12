@@ -129,15 +129,15 @@ module.exports = {
   },
 
   getRandomChallenge: function(cb) {
-    dbChallengeGenerator.ChallengeNoun.aggregate([
-      { $sample: { size: 1 } }
-    ]).then(noun => {
-      dbChallengeGenerator.ChallengeVerb.aggregate([
-        { $sample: { size: 1 } }
-      ]).then(verb => {
-        cb({ noun: noun[0].noun, verb: verb[0].verb });
-      });
-    });
+    dbChallengeGenerator.ChallengeNoun.aggregate([{ $sample: { size: 1 } }])
+      .then(noun => {
+        dbChallengeGenerator.ChallengeVerb.aggregate([{ $sample: { size: 1 } }])
+          .then(verb => {
+            cb({ noun: noun[0].noun, verb: verb[0].verb });
+          })
+          .catch(err => console.log(err));
+      })
+      .catch(err => console.log(err));
   }
   // ******* Challenge Generator *******
 };

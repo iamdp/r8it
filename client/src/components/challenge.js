@@ -1,37 +1,41 @@
 import React from "react";
-import axios from "axios";
+import API from "../utils/API";
 import "./challenge.css";
 
 class Challenge extends React.Component {
-  state = { user: "anon" };
+  state = {
+    user: "anon"
+  };
 
   componentDidMount() {
-    axios.get("/api/getComparables").then(response => {
-      console.log(response.data);
-      this.setState(response.data);
-    });
+    API.getComparables()
+      .then(challengers => {
+        console.log(challengers);
+        this.setState(challengers.data);
+      })
+      .catch(err => console.log(err));
   }
 
   handleClick = event => {
-    // Assign the userId here once feature if available
+    // Assign the userId here once feature if availabl
     let userId = this.state.userId
       ? this.state.userId
       : "5be04cee9971c8c18da3c1cc";
 
-    axios({
-      method: "POST",
-      url: "/api/saveResult",
-      data: {
-        challenger: event.target.getAttribute("data-challenger"),
-        challengee: event.target.getAttribute("data-challengee"),
-        userId
-      }
-    }).then(response => {
-      console.log(response);
-      axios.get("/api/getComparables").then(response => {
-        this.setState(response.data);
-      });
-    });
+    API.saveResult({
+      challenger: event.target.getAttribute("data-challenger"),
+      challengee: event.target.getAttribute("data-challengee"),
+      userId
+    })
+      .then(() => {
+        API.getComparables()
+          .then(response => {
+            console.log(response);
+            this.setState(response.data);
+          })
+          .catch(err => console.log(err));
+      })
+      .catch(err => console.log(err));
   };
 
   render() {
