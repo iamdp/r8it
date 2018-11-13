@@ -138,12 +138,6 @@ module.exports = {
           .catch(err => console.log(err));
       })
       .catch(err => console.log(err));
-  },
-  // ******* Challenge Generator *******
-
-  uploadImage: function(file, cb) {
-    cloudinary.v2.uploader.upload(file, (error, result) => {
-      cb(result);
-    });
   }
+  // ******* Challenge Generator *******
 };

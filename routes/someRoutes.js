@@ -29,11 +29,4 @@ router.post("/saveResult", (req, res) => {
     }
   );
 });
-
-router.post("/uploadImage", (req, res) => {
-  controller.uploadImage(req.body),
-    result => {
-      res.send(result);
-    };
-});
 module.exports = router;
