@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-import "./posts.css";
 
 class Posts extends React.Component {
   state = {};
@@ -27,47 +26,49 @@ class Posts extends React.Component {
   render() {
     if (this.state.posts) {
       return (
-        <div>
-          <div className="dropdown">
-            <button
-              className="btn btn-secondary dropdown-toggle"
-              type="button"
-              id="dropdownMenu2"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Filter By:
-            </button>
-            <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
+        <div className="container">
+          <div className="row justify-content-end mb-3">
+            <div className="dropdown">
               <button
-                className="dropdown-item"
+                className="btn btn-secondary dropdown-toggle"
                 type="button"
-                onClick={this.handlePeriodChange}
+                id="dropdownMenu2"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
               >
-                24 Hours
+                Filter By:
               </button>
-              <button
-                className="dropdown-item"
-                type="button"
-                onClick={this.handlePeriodChange}
-              >
-                Last Week
-              </button>
-              <button
-                className="dropdown-item"
-                type="button"
-                onClick={this.handlePeriodChange}
-              >
-                Last Month
-              </button>
-              <button
-                className="dropdown-item"
-                type="button"
-                onClick={this.handlePeriodChange}
-              >
-                Last Year
-              </button>
+              <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <button
+                  className="dropdown-item"
+                  type="button"
+                  onClick={this.handlePeriodChange}
+                >
+                  24 Hours
+                </button>
+                <button
+                  className="dropdown-item"
+                  type="button"
+                  onClick={this.handlePeriodChange}
+                >
+                  Last Week
+                </button>
+                <button
+                  className="dropdown-item"
+                  type="button"
+                  onClick={this.handlePeriodChange}
+                >
+                  Last Month
+                </button>
+                <button
+                  className="dropdown-item"
+                  type="button"
+                  onClick={this.handlePeriodChange}
+                >
+                  Last Year
+                </button>
+              </div>
             </div>
           </div>
 
