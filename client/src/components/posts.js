@@ -37,24 +37,30 @@ class Posts extends React.Component {
               <option value="24 Hours">24 Hours</option>
             </select>
           </div>
-          <div className="posts">
-            {this.state.posts.map(value => {
-              return (
-                <div className="post" key={value._id}>
-                  <img
-                    alt=""
-                    src={
-                      "https://res.cloudinary.com/r8te/image/upload/c_fill,h_40,w_40/" +
-                      value.cloudinaryRef
-                    }
-                  />
-                  <span>
-                    {value.title}:{value.desc}:{value.eloRank}
-                  </span>
+
+          {this.state.posts.map(value => {
+            return (
+              <div
+                className="card border-dark text-white bg-dark mb-3"
+                key={value._id}
+              >
+                <img
+                  className="card-img-top"
+                  src={
+                    "https://res.cloudinary.com/r8te/image/upload/c_fill,h_400,w_400/" +
+                    value.cloudinaryRef
+                  }
+                />
+                <div className="card-body">
+                  <h5 className="card-title">
+                    {value.title}:{value.eloRank}
+                  </h5>
+                  <p className="card-text">{value.desc}</p>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
+
           <div className="refresh">
             <button onClick={this.handleClick}>Refresh</button>
           </div>
