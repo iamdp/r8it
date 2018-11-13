@@ -17,8 +17,9 @@ class Posts extends React.Component {
     });
   };
 
-  handleChange = e => {
-    axios.get("/api/getPosts/" + e.target.value).then(response => {
+  handlePeriodChange = e => {
+    this.setState({ period: e.target.textContent });
+    axios.get("/api/getPosts/" + e.target.textContent).then(response => {
       this.setState({ posts: response.data });
     });
   };
@@ -27,15 +28,47 @@ class Posts extends React.Component {
     if (this.state.posts) {
       return (
         <div>
-          <div>
-            <select onChange={this.handleChange}>
-              <option value="Last Year" defaultValue>
+          <div className="dropdown">
+            <button
+              className="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenu2"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Filter By:
+            </button>
+            <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
+              <button
+                className="dropdown-item"
+                type="button"
+                onClick={this.handlePeriodChange}
+              >
+                24 Hours
+              </button>
+              <button
+                className="dropdown-item"
+                type="button"
+                onClick={this.handlePeriodChange}
+              >
+                Last Week
+              </button>
+              <button
+                className="dropdown-item"
+                type="button"
+                onClick={this.handlePeriodChange}
+              >
+                Last Month
+              </button>
+              <button
+                className="dropdown-item"
+                type="button"
+                onClick={this.handlePeriodChange}
+              >
                 Last Year
-              </option>
-              <option value="Last Month">Last Month</option>
-              <option value="Last Week">Last Week</option>
-              <option value="24 Hours">24 Hours</option>
-            </select>
+              </button>
+            </div>
           </div>
 
           {this.state.posts.map(value => {
