@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import About from "./components/about";
 
 import R8it from "./components/r8it";
-import Posts from "./components/r8it/posts";
+import Posts from "./components/r8it/review";
 import Rate from "./components/r8it/rate";
 import Submit from "./components/r8it/submit";
 import ChallengeGenerator from "./components/about/challengeGenerator";
