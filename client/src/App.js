@@ -1,20 +1,20 @@
 import React, { Component } from "react";
-import Catgories from "./components/categories";
-import Posts from "./components/posts";
-import Challenge from "./components/challenge";
-import Submit from "./components/submit";
-import ChallengeGenerator from "./components/challengeGenerator";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+
+import About from "./components/about";
+import R8it from "./components/r8it";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <ChallengeGenerator />
-        <Catgories />
-        <Posts />
-        <Challenge />
-        <Submit />
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <Switch>
+            <Route exact path="/" component={R8it} />
+            <Route exact path="/about" component={About} />
+          </Switch>
+        </div>
+      </BrowserRouter>
     );
   }
 }
