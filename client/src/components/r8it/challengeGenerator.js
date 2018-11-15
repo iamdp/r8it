@@ -18,8 +18,11 @@ class ChallengeGenerator extends React.Component {
 
   render() {
     return (
-      <div>
-        Challenge Generator {this.state.verb} {this.state.noun}
+      <div className="container m-4">
+        <h1>Challenge Generator</h1>
+        <p>
+          {this.state.verb} {this.state.noun}
+        </p>
         <button onClick={this.handleClick}>Generate a new challenge</button>
       </div>
     );

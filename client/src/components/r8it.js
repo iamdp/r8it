@@ -4,6 +4,10 @@ import styled from "styled-components";
 
 import Rate from "./r8it/rate";
 import Post from "./r8it/review-post";
+import PostList from "./r8it/review-list";
+import Submit from "./r8it/submit";
+import ChallengeGenerator from "./r8it/challengeGenerator";
+import Categories from "./r8it/categories";
 
 const Logo = styled.img`
   height: 30px;
@@ -33,7 +37,7 @@ class r8it extends React.Component {
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
               <li className="nav-item">
-                <Link className="nav-link" to="/rate">
+                <Link className="nav-link" to="/">
                   Rate
                 </Link>
               </li>
@@ -57,6 +61,10 @@ class r8it extends React.Component {
         </nav>
         <Route exact path="/" component={Rate} />
         <Route exact path="/review/:postId" component={Post} />
+        <Route exact path="/review" component={PostList} />
+        <Route exact path="/compete" component={Submit} />
+        <Route exact path="/create" component={ChallengeGenerator} />
+        <Route exact path="/category" component={Categories} />
       </div>
     );
   }
