@@ -13,6 +13,10 @@ router.get("/getPosts/:period?", (req, res) => {
   controller.getPosts(req.params.period, response => res.send(response));
 });
 
+router.get("/getPost/:postId", (req, res) => {
+  controller.getPost(req.params.postId, response => res.send(response));
+});
+
 router.get("/getComparables", (req, res) => {
   controller.getComparables(result => res.send(result));
 });

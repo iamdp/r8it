@@ -69,6 +69,12 @@ module.exports = {
       });
   },
 
+  getPost: function(postId, cb) {
+    db.Post.findById(postId).exec((err, post) => {
+      cb(post);
+    });
+  },
+
   getCloudinaryUrl: function(cloudinaryRef) {
     return cloudinary.url(
       cloudinaryRef,
