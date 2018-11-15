@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const db = require("../models/models");
-const dbChallengeGenerator = require("../models/challengeGenerator");
+const dbChallengeGenerator = require("../models/randomChallenge-model");
 const moment = require("moment");
 
 const cloudinary = require("cloudinary");
@@ -120,28 +120,21 @@ module.exports = {
   // ******* Challenge Functionality *******
 
   // ******* Challenge Generator *******
-  addChallengeNoun: function(noun, cb) {
-    new dbChallengeGenerator.ChallengeNoun({ noun }).save((err, result) => {
-      if (err) console.log(err);
-      cb(result);
-    });
-  },
-
-  addChallengeVerb: function(verb, cb) {
-    new dbChallengeGenerator.ChallengeVerb({ verb }).save((err, result) => {
+  addChallenge: function(challenge, cb) {
+    new dbChallengeGenerator({
+      verb: challenge.verb,
+      noun: challenge.noun
+    }).save((err, result) => {
       if (err) console.log(err);
       cb(result);
     });
   },
 
   getRandomChallenge: function(cb) {
-    dbChallengeGenerator.ChallengeNoun.aggregate([{ $sample: { size: 1 } }])
-      .then(noun => {
-        dbChallengeGenerator.ChallengeVerb.aggregate([{ $sample: { size: 1 } }])
-          .then(verb => {
-            cb({ noun: noun[0].noun, verb: verb[0].verb });
-          })
-          .catch(err => console.log(err));
+    dbChallengeGenerator
+      .aggregate([{ $sample: { size: 1 } }])
+      .then(challenge => {
+        cb({ noun: challenge[0].noun, verb: challenge[0].verb });
       })
       .catch(err => console.log(err));
   }
