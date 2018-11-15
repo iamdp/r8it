@@ -8,9 +8,7 @@ class Submit extends React.Component {
     title: "",
     description: "",
     cloudinaryRef: "placeholder",
-    challengeId: "",
-    userId: "placeholder",
-    file: null
+    challengeId: ""
   };
 
   componentDidMount = () => {
@@ -31,32 +29,22 @@ class Submit extends React.Component {
     });
   };
 
-  handleFileSelect = event => {
-    this.setState({
-      file: event.target.files[0]
-    });
-  };
-
-  //API.uploadImage()
-  //Upload image POST first, using the image POST response cloudinaryRefID
-  //API.submitPost({cloudinaryRef: ImgPostRespons.cloudinaryRefId})
   handleSubmit = event => {
     event.preventDefault();
-    API.uploadImage(this.state.file).then(response => {
-      console.log(response);
 
-      // API.submitPost({
-      //   eloRank: this.state.eloRank,
-      //   title: this.state.title,
-      //   description: this.state.description,
-      //   // what the relational ID for the submitted image to submitted post is unknown for now
-      //   // cloudinaryRef: response.id
-      //   cloudinaryRef: this.state.cloudinaryRef,
-      //   challengeId: this.state.challengeId,
-      //   userId: this.state.userId
-      // }).then(res => {
-      //   console.log(res);
-      // });
+    let userId = this.state.userId
+      ? this.state.userId
+      : "5be04cee9971c8c18da3c1cc";
+
+    API.submitPost({
+      eloRank: this.state.eloRank,
+      title: this.state.title,
+      description: this.state.description,
+      cloudinaryRef: this.state.cloudinaryRef,
+      challengeId: this.state.challengeId,
+      userId
+    }).then(res => {
+      console.log(res);
     });
   };
 
@@ -92,15 +80,6 @@ class Submit extends React.Component {
               );
             })}
           </select>
-          <label>
-            Image Upload
-            <input
-              name="file"
-              type="file"
-              className="file-upload"
-              onChange={this.handleFileSelect}
-            />
-          </label>
           <input type="submit" value="Submit" />
         </form>
       </div>

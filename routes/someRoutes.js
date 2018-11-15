@@ -29,4 +29,25 @@ router.post("/saveResult", (req, res) => {
     }
   );
 });
+
+router.post("/submitPost", (req, res) => {
+  //Just wanted to try object desctructuring
+  let {
+    title: title,
+    eloRank: eloRank,
+    description: desc,
+    cloudinaryRef: cloudinaryRef,
+    challengeId: challengeId,
+    userId: userId
+  } = req.body;
+
+  controller.submitPost({
+    title: title,
+    desc: desc,
+    eloRank: eloRank,
+    cloudinaryRef: cloudinaryRef,
+    challengeId: challengeId,
+    userId: userId
+  });
+});
 module.exports = router;
