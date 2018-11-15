@@ -9,5 +9,8 @@ export default {
   },
   getCategories: () => {
     return axios.get("/api/getCategories");
+  },
+  submitPost: data => {
+    return axios.post("/api/submitPost", data);
   }
 };

@@ -138,6 +138,12 @@ module.exports = {
           .catch(err => console.log(err));
       })
       .catch(err => console.log(err));
-  }
+  },
   // ******* Challenge Generator *******
+  submitPost: postData => {
+    db.Post.create(postData, (err, res) => {
+      console.log(res);
+      if (err) return handleError(err);
+    });
+  }
 };
