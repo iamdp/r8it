@@ -15,7 +15,7 @@ class r8it extends React.Component {
       <div>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
           <span className="navbar-brand mb-0 h1">
-            <Logo className="img-fluid" src="./media/logo-r8it.png" />
+            <Logo className="img-fluid" src="/media/logo-r8it.png" />
             R8IT.LIVE - FOR THE SOCIALLY COMPETITIVE
           </span>
           <button

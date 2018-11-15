@@ -80,7 +80,8 @@ class Challenge extends React.Component {
               onClick={this.handleClick}
               src={
                 "http://res.cloudinary.com/r8te/image/upload/bo_2px_solid_rgb:000000,c_fill,f_webp,fl_awebp,g_center,h_412,q_auto,w_400/" +
-                this.state.posts[1].cloudinaryRef
+                this.state.posts[1].cloudinaryRef +
+                ".png"
               }
             />
             <img
@@ -91,7 +92,8 @@ class Challenge extends React.Component {
               alt={this.state.posts[1].title}
               src={
                 "http://res.cloudinary.com/r8te/image/upload/bo_2px_solid_rgb:000000,c_fill,f_webp,fl_awebp,g_center,h_412,q_auto,w_400/" +
-                this.state.posts[0].cloudinaryRef
+                this.state.posts[0].cloudinaryRef +
+                ".png"
               }
             />
           </div>

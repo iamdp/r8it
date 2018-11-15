@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 class PostList extends React.Component {
@@ -10,10 +11,12 @@ class PostList extends React.Component {
     });
   }
 
-  handleClick = () => {
-    axios.get("/api/getPosts").then(response => {
-      this.setState({ posts: response.data });
-    });
+  handleClick = e => {
+    axios
+      .get("/api/getPost" + e.target.getAttribute("data-id"))
+      .then(response => {
+        this.setState({ posts: response.data });
+      });
   };
 
   handlePeriodChange = e => {
@@ -89,9 +92,13 @@ class PostList extends React.Component {
                     }
                   />
                   <div className="media-body">
-                    <h5 className="mt-0">{value.title}</h5>
+                    <h5 className="mt-0">
+                      {value.title} ({value.eloRank})
+                    </h5>
                     <p>{value.desc}</p>
-                    <p className="mb-0">Rating: {value.eloRank}</p>
+                    <p className="mb-0">
+                      <Link to={"/review/" + value._id}>Detail</Link>
+                    </p>
                   </div>
                 </li>
               );
