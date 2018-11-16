@@ -75,32 +75,31 @@ class PostList extends React.Component {
             </div>
           </div>
 
-          <ul class="list-unstyled">
+          <ul class="list-group">
             {this.state.posts.map(value => {
               return (
-                <li
-                  className="media border-dark text-white bg-dark m-4"
-                  key={value._id}
-                  data-id={value._id}
-                >
-                  <img
-                    className="align-self-center mr-3"
-                    src={
-                      "https://res.cloudinary.com/r8te/image/upload/c_fill,h_100,w_100/" +
-                      value.cloudinaryRef +
-                      ".png"
-                    }
-                  />
-                  <div className="media-body">
-                    <h5 className="mt-0">
-                      {value.title} ({value.eloRank})
-                    </h5>
-                    <p>{value.desc}</p>
-                    <p className="mb-0">
-                      <Link to={"/review/" + value._id}>Detail</Link>
-                    </p>
-                  </div>
-                </li>
+                <Link to={"/review/" + value._id}>
+                  <li
+                    className="media border-dark text-white bg-dark m-4"
+                    key={value._id}
+                    data-id={value._id}
+                  >
+                    <img
+                      className="align-self-center mr-3"
+                      src={
+                        "https://res.cloudinary.com/r8te/image/upload/c_fill,h_100,w_100/" +
+                        value.cloudinaryRef +
+                        ".png"
+                      }
+                    />
+                    <div className="media-body">
+                      <h5 className="mt-0">
+                        {value.title} ({value.eloRank})
+                      </h5>
+                      <p className="mb-0">{value.desc}</p>
+                    </div>
+                  </li>
+                </Link>
               );
             })}
           </ul>

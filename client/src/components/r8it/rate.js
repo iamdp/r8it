@@ -79,7 +79,7 @@ class Challenge extends React.Component {
               data-challengee={this.state.posts[0]._id}
               onClick={this.handleClick}
               src={
-                "http://res.cloudinary.com/r8te/image/upload/bo_2px_solid_rgb:000000,c_fill,f_webp,fl_awebp,g_center,h_412,q_auto,w_400/" +
+                "http://res.cloudinary.com/r8te/image/upload/c_fill,f_webp,g_center,h_400,q_auto,w_400/" +
                 this.state.posts[1].cloudinaryRef +
                 ".png"
               }
@@ -91,7 +91,7 @@ class Challenge extends React.Component {
               onClick={this.handleClick}
               alt={this.state.posts[1].title}
               src={
-                "http://res.cloudinary.com/r8te/image/upload/bo_2px_solid_rgb:000000,c_fill,f_webp,fl_awebp,g_center,h_412,q_auto,w_400/" +
+                "http://res.cloudinary.com/r8te/image/upload/c_fill,f_webp,g_center,h_400,q_auto,w_400/" +
                 this.state.posts[0].cloudinaryRef +
                 ".png"
               }
