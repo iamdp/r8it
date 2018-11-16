@@ -13,4 +13,8 @@ router.post("/addChallenge", (req, res) => {
   );
 });
 
+router.post("/establishChallenge", (req, res) => {
+  controller.establishChallenge(req.body.id, result => res.send(result));
+});
+
 module.exports = router;

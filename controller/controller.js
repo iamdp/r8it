@@ -135,9 +135,24 @@ module.exports = {
   getRandomChallenge: function(cb) {
     dbChallenge.RandomChallenge.aggregate([{ $sample: { size: 1 } }])
       .then(challenge => {
-        cb({ noun: challenge[0].noun, verb: challenge[0].verb });
+        cb({
+          noun: challenge[0].noun,
+          verb: challenge[0].verb,
+          id: challenge[0]._id
+        });
       })
       .catch(err => console.log(err));
+  },
+
+  establishChallenge: function(challenge, cb) {
+    dbChallenge.RandomChallenge.findByIdAndDelete(challenge, (err, res) => {
+      if (err) console.log(err);
+      const { verb, noun } = res;
+      new dbChallenge.Challenge({ verb, noun }).save((err, result) => {
+        if (err) console.log(err);
+        cb(result);
+      });
+    });
   }
   // ******* Challenge Generator *******
 };
