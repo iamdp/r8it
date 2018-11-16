@@ -13,6 +13,12 @@ const Logo = styled.img`
   height: 30px;
   margin-right: 10px;
 `;
+
+const Motto = styled.span`
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
 class r8it extends React.Component {
   render() {
     return (
@@ -20,7 +26,7 @@ class r8it extends React.Component {
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
           <span className="navbar-brand mb-0 h1">
             <Logo className="img-fluid" src="/media/logo-r8it.png" />
-            R8IT.LIVE - FOR THE SOCIALLY COMPETITIVE
+            R8IT.LIVE <Motto>- FOR THE SOCIALLY COMPETITIVE</Motto>
           </span>
           <button
             className="navbar-toggler"
