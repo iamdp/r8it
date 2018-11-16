@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const db = require("../models/models");
-const dbChallengeGenerator = require("../models/randomChallenge-model");
+const dbChallenge = require("../models/challenge-models");
 const moment = require("moment");
 
 const cloudinary = require("cloudinary");
@@ -26,7 +26,7 @@ function getCloudinaryUrl(cloudinaryRef) {
 
 module.exports = {
   getCategories: function(cb) {
-    db.Challenge.find().exec((err, posts) => {
+    dbChallenge.Challenge.find().exec((err, posts) => {
       cb(posts);
     });
   },
@@ -85,18 +85,20 @@ module.exports = {
   // ******* Challenge Functionality *******
   getComparables: function(cb) {
     // Pick a random challenge, pick 2 random posts from that challenge category then return the results
-    db.Challenge.aggregate([{ $sample: { size: 1 } }]).then(challenges => {
-      db.Post.aggregate([
-        { $match: { challengeId: challenges[0]._id } },
-        { $sample: { size: 2 } }
-      ]).then(posts => {
-        // Creating a property on the post object that adds the cloudinary url
-        posts.forEach(post => {
-          post.cloudinaryUrl = getCloudinaryUrl(post.cloudinaryRef);
+    dbChallenge.Challenge.aggregate([{ $sample: { size: 1 } }]).then(
+      challenges => {
+        dbChallenge.Post.aggregate([
+          { $match: { challengeId: challenges[0]._id } },
+          { $sample: { size: 2 } }
+        ]).then(posts => {
+          // Creating a property on the post object that adds the cloudinary url
+          posts.forEach(post => {
+            post.cloudinaryUrl = getCloudinaryUrl(post.cloudinaryRef);
+          });
+          cb({ challenge: challenges[0], posts });
         });
-        cb({ challenge: challenges[0], posts });
-      });
-    });
+      }
+    );
   },
 
   saveResult: function(result, cb) {
@@ -121,7 +123,7 @@ module.exports = {
 
   // ******* Challenge Generator *******
   addChallenge: function(challenge, cb) {
-    new dbChallengeGenerator({
+    new dbChallenge.RandomChallenge({
       verb: challenge.verb,
       noun: challenge.noun
     }).save((err, result) => {
@@ -131,8 +133,7 @@ module.exports = {
   },
 
   getRandomChallenge: function(cb) {
-    dbChallengeGenerator
-      .aggregate([{ $sample: { size: 1 } }])
+    dbChallenge.RandomChallenge.aggregate([{ $sample: { size: 1 } }])
       .then(challenge => {
         cb({ noun: challenge[0].noun, verb: challenge[0].verb });
       })
