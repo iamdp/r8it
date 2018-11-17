@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
-class Posts extends React.Component {
+class PostList extends React.Component {
   state = {};
 
   componentDidMount() {
@@ -10,10 +11,12 @@ class Posts extends React.Component {
     });
   }
 
-  handleClick = () => {
-    axios.get("/api/getPosts").then(response => {
-      this.setState({ posts: response.data });
-    });
+  handleClick = e => {
+    axios
+      .get("/api/getPost" + e.target.getAttribute("data-id"))
+      .then(response => {
+        this.setState({ posts: response.data });
+      });
   };
 
   handlePeriodChange = e => {
@@ -72,36 +75,38 @@ class Posts extends React.Component {
             </div>
           </div>
 
-          {this.state.posts.map(value => {
-            return (
-              <div
-                className="card border-dark text-white bg-dark mb-3"
-                key={value._id}
-              >
-                <img
-                  className="card-img-top"
-                  src={
-                    "https://res.cloudinary.com/r8te/image/upload/c_fill,h_400,w_400/" +
-                    value.cloudinaryRef
-                  }
-                />
-                <div className="card-body">
-                  <h5 className="card-title">
-                    {value.title}:{value.eloRank}
-                  </h5>
-                  <p className="card-text">{value.desc}</p>
-                </div>
-              </div>
-            );
-          })}
-
-          <div className="refresh">
-            <button onClick={this.handleClick}>Refresh</button>
-          </div>
+          <ul class="list-group">
+            {this.state.posts.map(value => {
+              return (
+                <Link to={"/review/" + value._id}>
+                  <li
+                    className="media border-dark text-white bg-dark m-4"
+                    key={value._id}
+                    data-id={value._id}
+                  >
+                    <img
+                      className="align-self-center mr-3"
+                      src={
+                        "https://res.cloudinary.com/r8te/image/upload/c_fill,h_100,w_100/" +
+                        value.cloudinaryRef +
+                        ".png"
+                      }
+                    />
+                    <div className="media-body">
+                      <h5 className="mt-0">
+                        {value.title} ({value.eloRank})
+                      </h5>
+                      <p className="mb-0">{value.desc}</p>
+                    </div>
+                  </li>
+                </Link>
+              );
+            })}
+          </ul>
         </div>
       );
     } else return null;
   }
 }
 
-export default Posts;
+export default PostList;

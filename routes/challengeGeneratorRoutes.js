@@ -6,12 +6,15 @@ router.get("/getRandomChallenge", (req, res) => {
   controller.getRandomChallenge(result => res.send(result));
 });
 
-router.post("/addChallengeVerb", (req, res) => {
-  controller.addChallengeVerb(req.body.verb, result => res.send(result));
+router.post("/addChallenge", (req, res) => {
+  controller.addChallenge(
+    { verb: req.body.verb, noun: req.body.noun },
+    result => res.send(result)
+  );
 });
 
-router.post("/addChallengeNoun", (req, res) => {
-  controller.addChallengeNoun(req.body.noun, result => res.send(result));
+router.post("/establishChallenge", (req, res) => {
+  controller.establishChallenge(req.body.id, result => res.send(result));
 });
 
 module.exports = router;

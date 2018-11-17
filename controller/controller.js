@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const db = require("../models/models");
-const dbChallengeGenerator = require("../models/challengeGenerator");
+const dbChallenge = require("../models/challenge-models");
 const moment = require("moment");
 
 const cloudinary = require("cloudinary");
@@ -26,7 +26,7 @@ function getCloudinaryUrl(cloudinaryRef) {
 
 module.exports = {
   getCategories: function(cb) {
-    db.Challenge.find().exec((err, posts) => {
+    dbChallenge.Challenge.find().exec((err, posts) => {
       cb(posts);
     });
   },
@@ -69,6 +69,12 @@ module.exports = {
       });
   },
 
+  getPost: function(postId, cb) {
+    db.Post.findById(postId).exec((err, post) => {
+      cb(post);
+    });
+  },
+
   getCloudinaryUrl: function(cloudinaryRef) {
     return cloudinary.url(
       cloudinaryRef,
@@ -79,18 +85,20 @@ module.exports = {
   // ******* Challenge Functionality *******
   getComparables: function(cb) {
     // Pick a random challenge, pick 2 random posts from that challenge category then return the results
-    db.Challenge.aggregate([{ $sample: { size: 1 } }]).then(challenges => {
-      db.Post.aggregate([
-        { $match: { challengeId: challenges[0]._id } },
-        { $sample: { size: 2 } }
-      ]).then(posts => {
-        // Creating a property on the post object that adds the cloudinary url
-        posts.forEach(post => {
-          post.cloudinaryUrl = getCloudinaryUrl(post.cloudinaryRef);
+    dbChallenge.Challenge.aggregate([{ $sample: { size: 1 } }]).then(
+      challenges => {
+        db.Post.aggregate([
+          { $match: { challengeId: challenges[0]._id } },
+          { $sample: { size: 2 } }
+        ]).then(posts => {
+          // Creating a property on the post object that adds the cloudinary url
+          posts.forEach(post => {
+            post.cloudinaryUrl = getCloudinaryUrl(post.cloudinaryRef);
+          });
+          cb({ challenge: challenges[0], posts });
         });
-        cb({ challenge: challenges[0], posts });
-      });
-    });
+      }
+    );
   },
 
   saveResult: function(result, cb) {
@@ -114,32 +122,40 @@ module.exports = {
   // ******* Challenge Functionality *******
 
   // ******* Challenge Generator *******
-  addChallengeNoun: function(noun, cb) {
-    new dbChallengeGenerator.ChallengeNoun({ noun }).save((err, result) => {
-      if (err) console.log(err);
-      cb(result);
-    });
-  },
-
-  addChallengeVerb: function(verb, cb) {
-    new dbChallengeGenerator.ChallengeVerb({ verb }).save((err, result) => {
+  addChallenge: function(challenge, cb) {
+    new dbChallenge.RandomChallenge({
+      verb: challenge.verb,
+      noun: challenge.noun
+    }).save((err, result) => {
       if (err) console.log(err);
       cb(result);
     });
   },
 
   getRandomChallenge: function(cb) {
-    dbChallengeGenerator.ChallengeNoun.aggregate([{ $sample: { size: 1 } }])
-      .then(noun => {
-        dbChallengeGenerator.ChallengeVerb.aggregate([{ $sample: { size: 1 } }])
-          .then(verb => {
-            cb({ noun: noun[0].noun, verb: verb[0].verb });
-          })
-          .catch(err => console.log(err));
+    dbChallenge.RandomChallenge.aggregate([{ $sample: { size: 1 } }])
+      .then(challenge => {
+        cb({
+          noun: challenge[0].noun,
+          verb: challenge[0].verb,
+          id: challenge[0]._id
+        });
       })
       .catch(err => console.log(err));
   },
+  
+  establishChallenge: function(challenge, cb) {
+    dbChallenge.RandomChallenge.findByIdAndDelete(challenge, (err, res) => {
+      if (err) console.log(err);
+      const { verb, noun } = res;
+      new dbChallenge.Challenge({ verb, noun }).save((err, result) => {
+        if (err) console.log(err);
+        cb(result);
+      });
+    });
+  },
   // ******* Challenge Generator *******
+  
   submitPost: (postData, cb) => {
     db.Post.create(postData, (err, res) => {
       if (err) return handleError(err);
