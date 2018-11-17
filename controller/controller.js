@@ -87,7 +87,7 @@ module.exports = {
     // Pick a random challenge, pick 2 random posts from that challenge category then return the results
     dbChallenge.Challenge.aggregate([{ $sample: { size: 1 } }]).then(
       challenges => {
-        dbChallenge.Post.aggregate([
+        db.Post.aggregate([
           { $match: { challengeId: challenges[0]._id } },
           { $sample: { size: 2 } }
         ]).then(posts => {
