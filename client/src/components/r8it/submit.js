@@ -89,7 +89,6 @@ class Submit extends React.Component {
               </select>
             </label>
           </div>
-
           <input type="submit" value="Submit" />
         </form>
       </div>

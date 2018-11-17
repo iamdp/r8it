@@ -32,23 +32,27 @@ router.post("/saveResult", (req, res) => {
 
 router.post("/submitPost", (req, res) => {
   //Just wanted to try object desctructuring
-  let {
+  const {
     title: title,
-    eloRank: eloRank,
     description: desc,
     cloudinaryRef: cloudinaryRef,
     challengeId: challengeId,
     userId: userId
   } = req.body;
 
-  controller.submitPost({
-    title: title,
-    desc: desc,
-    eloRank: eloRank,
-    cloudinaryRef: cloudinaryRef,
-    challengeId: challengeId,
-    userId: userId
-  });
+  controller.submitPost(
+    {
+      title,
+      desc,
+      eloRank: 0,
+      cloudinaryRef,
+      challengeId,
+      userId
+    },
+    result => {
+      res.send(result);
+    }
+  );
 });
 
 module.exports = router;
