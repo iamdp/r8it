@@ -9,5 +9,14 @@ export default {
   },
   getCategories: () => {
     return axios.get("/api/getCategories");
+  },
+  submitPost: data => {
+    return axios.post("/api/submitPost", data);
+  },
+  uploadImage: data => {
+    return axios.post(
+      "https://api.cloudinary.com/v1_1/ocwru6tt/image/upload",
+      data
+    );
   }
 };

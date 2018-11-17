@@ -153,6 +153,14 @@ module.exports = {
         cb(result);
       });
     });
-  }
+  },
   // ******* Challenge Generator *******
+
+  submitPost: (postData, cb) => {
+    db.Post.create(postData, (err, res) => {
+      if (err) return handleError(err);
+      console.log(res);
+      cb(res);
+    });
+  }
 };
