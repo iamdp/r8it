@@ -143,7 +143,7 @@ module.exports = {
       })
       .catch(err => console.log(err));
   },
-  
+
   establishChallenge: function(challenge, cb) {
     dbChallenge.RandomChallenge.findByIdAndDelete(challenge, (err, res) => {
       if (err) console.log(err);
@@ -155,12 +155,12 @@ module.exports = {
     });
   },
   // ******* Challenge Generator *******
-  
+
   submitPost: (postData, cb) => {
     db.Post.create(postData, (err, res) => {
       if (err) return handleError(err);
       console.log(res);
-      cb(result);
+      cb(res);
     });
   }
 };
