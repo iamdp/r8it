@@ -57,7 +57,6 @@ class Submit extends React.Component {
               Title:
               <input
                 type="text"
-                value={this.state.title}
                 name="title"
                 onChange={this.handleInputChange}
               />
@@ -68,7 +67,6 @@ class Submit extends React.Component {
               Description:
               <input
                 type="text"
-                value={this.state.description}
                 name="description"
                 onChange={this.handleInputChange}
               />
