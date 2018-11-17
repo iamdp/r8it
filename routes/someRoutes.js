@@ -37,11 +37,11 @@ router.post("/saveResult", (req, res) => {
 router.post("/submitPost", (req, res) => {
   //Just wanted to try object desctructuring
   const {
-    title: title,
+    title,
     description: desc,
-    cloudinaryRef: cloudinaryRef,
-    challengeId: challengeId,
-    userId: userId
+    cloudinaryRef,
+    challengeId,
+    userId
   } = req.body;
 
   controller.submitPost(
