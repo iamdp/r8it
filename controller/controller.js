@@ -144,7 +144,6 @@ module.exports = {
     db.Post.create(postData, (err, res) => {
       if (err) return handleError(err);
       console.log(res);
-    }).then(result => {
       cb(result);
     });
   }
