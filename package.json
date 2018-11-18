@@ -15,7 +15,7 @@
     "react-flipcard": "^0.2.1",
     "react-flippy": "^0.1.2",
     "react-player": "^1.6.6",
-    "react-scripts": "2.1.1"
+    "react-scripts": "^2.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -33,6 +33,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "cra-universal": "^4.0.0"
+    "cra-universal": "^4.1.0"
   }
 }

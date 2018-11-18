@@ -22,13 +22,24 @@ import {
 } from 'react-bootstrap';
 import ReactPlayer from 'react-player';
 // import { library } from '@fortawesome/fontawesome-svg-core';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { FontAwesomeIcon } from '@fortawesome/ react-fontawesome';
 // import { faStroopwafel } from '@fortawesome/free-solid-svg-icons';
 // library.add(faStroopwafel);
 //
 // import FlipCard from 'react-flipcard';
+// import posed from 'react-pose';
 
-class Dashboard extends Component {
+// const box = posed.div({
+//   hoverable: true
+// });
+//
+
+class Dashboard extends Component { 
+state={ I }
+  state = {
+    cardSelected: true
+  };
+
   getInitialState() {
     return {
       isFlipped: false
