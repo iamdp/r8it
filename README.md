@@ -4,7 +4,6 @@
 
 - Members
   - Mateus Koehler
-  - Natalia Mahabir
   - David Pham
   - Vishnu Swaminathan
 
@@ -17,7 +16,7 @@ A website built for the socially opiniated.
 Start by installing front and backend dependencies. While in this directory, run the following command:
 
 ```
-yarn install
+npm install
 ```
 
 This should install node modules within the server and the client folder.
@@ -25,7 +24,7 @@ This should install node modules within the server and the client folder.
 After both installations complete, run the following command in your terminal:
 
 ```
-yarn start
+npm start
 ```
 
 Your app should now be running on <http://localhost:3000>. The Express server should intercept any AJAX requests from the client.
