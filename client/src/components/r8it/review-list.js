@@ -86,6 +86,7 @@ class PostList extends React.Component {
                   >
                     <img
                       className="align-self-center mr-3"
+                      alt={value._id}
                       src={
                         "https://res.cloudinary.com/r8te/image/upload/c_fill,h_100,w_100/" +
                         value.cloudinaryRef +

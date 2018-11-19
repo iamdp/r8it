@@ -24,6 +24,7 @@ class Post extends React.Component {
           >
             <img
               className="card-img-top"
+              alt={post._id}
               src={
                 "https://res.cloudinary.com/r8te/image/upload/c_fill,h_400,w_400/" +
                 post.cloudinaryRef
