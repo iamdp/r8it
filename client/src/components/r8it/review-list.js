@@ -78,10 +78,9 @@ class PostList extends React.Component {
           <ul class="list-group">
             {this.state.posts.map(value => {
               return (
-                <Link to={"/review/" + value._id}>
+                <Link to={"/review/" + value._id} key={value._id}>
                   <li
                     className="media border-dark text-white bg-dark m-4"
-                    key={value._id}
                     data-id={value._id}
                   >
                     <img
