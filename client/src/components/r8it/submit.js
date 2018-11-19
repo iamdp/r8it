@@ -51,7 +51,7 @@ class Submit extends React.Component {
   };
 
   uploadWidget = () => {
-    window.cloudinary.openUploadWidget(
+    const widget = window.cloudinary.openUploadWidget(
       {
         cloudName: "r8te",
         uploadPreset: "jlv2outw",
@@ -93,6 +93,7 @@ class Submit extends React.Component {
             cloudinaryRef: result.info.public_id,
             thumbnail_url: result.info.thumbnail_url
           });
+          widget.close();
         }
       }
     );
