@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-import About from "./components/about";
 import R8it from "./components/r8it";
 
 class App extends Component {
@@ -10,7 +9,6 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Switch>
-            <Route exact path="/about" component={About} />
             <Route path="/" component={R8it} />
           </Switch>
         </div>
@@ -20,3 +18,6 @@ class App extends Component {
 }
 
 export default App;
+
+// import About from "./components/about";
+//     <Route exact path="/about" component={About} />
