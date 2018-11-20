@@ -2,9 +2,18 @@ const mongoose = require("mongoose");
 const db = require("../models/models");
 const dbChallenge = require("../models/challenge-models");
 const moment = require("moment");
-
+const eloRank = require("elo-rank");
 const cloudinary = require("cloudinary");
 const config = require("../config.json");
+
+let winner = {};
+let loser = {};
+
+//Hoping to change this by implementing the amount of games an image has played, this ensures a more fair system.
+//K = 40, for a player new to the rating list until the completion of events with a total of 30 games, as long as their rating remains under 2300.
+//K = 20, for players with a rating always under 2400.
+//K = 10, for players with any published rating of at least 2400 and at least 30 games played in previous events. Thereafter it remains permanently at 10
+const elo = new eloRank(20);
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -23,6 +32,18 @@ function getCloudinaryUrl(cloudinaryRef) {
     config.cloudinary.standardTransformation
   );
 }
+
+const calculateWinner = (winner, loser) => {
+  let expectedScore = elo.getExpected(winner.eloRank, loser.eloRank);
+  let newScore = elo.updateRating(expectedScore, 1, winner.eloRank);
+  return newScore;
+};
+
+const calculateLoser = (loser, winner) => {
+  let expectedScore = elo.getExpected(loser.eloRank, winner.eloRank);
+  let newScore = elo.updateRating(expectedScore, 0, loser.eloRank);
+  return newScore;
+};
 
 module.exports = {
   getCategories: function(cb) {
@@ -102,17 +123,24 @@ module.exports = {
   },
 
   saveResult: function(result, cb) {
-    // Update winning post
-    db.Post.findByIdAndUpdate(result.challenger, {
-      $inc: { eloRank: 1 }
-    }).exec((err, res) => {
-      if (err) console.log(err);
+    db.Post.findById(result.challenger, (err, challenger) => {
+      if (err) return handleError(err);
 
-      // Update losing post
-      db.Post.findByIdAndUpdate(result.challengee, {
-        $inc: { eloRank: -1 }
-      }).exec((err, res) => {
-        if (err) console.log(err);
+      db.Post.findById(result.challengee, (err, challengee) => {
+        if (err) return handleError(err);
+
+        challenger.set({ eloRank: calculateWinner(challenger, challengee) });
+        challengee.set({ eloRank: calculateLoser(challengee, challenger) });
+
+        challengee.save((err, updatedChallengee) => {
+          if (err) return handleError(err);
+          console.log(updatedChallengee);
+        });
+
+        challenger.save((err, updatedChallenger) => {
+          if (err) return handleError(err);
+          console.log(updatedChallenger);
+        });
       });
     });
 
