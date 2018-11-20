@@ -1,6 +1,17 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import API from "../../utils/API";
 import "./challenge.css";
+import styled from "styled-components";
+
+const Challenger = styled.div`
+  box-shadow: 5px 10px 18px #888888;
+  img {
+    width: 100%;
+    height: auto;
+    padding: 10px 0;
+  }
+`;
 
 class Challenge extends React.Component {
   state = {
@@ -49,22 +60,28 @@ class Challenge extends React.Component {
       return (
         <div className="alert alert-danger" role="alert">
           <p>
-            The {this.state.challenge.verb} {this.state.challenge.noun} has less
-            than two posts.
+            The {this.state.challenge.verb} {this.state.challenge.noun}{" "}
+            challenge has less than two posts.
           </p>
           <p>
             Contribute to this challenge category by clicking{" "}
-            <button>here</button> or
+            <Link to="/compete">
+              <button className="btn btn-primary">here</button>
+            </Link>{" "}
+            or
           </p>
           <p>
-            Click <button onClick={this.handleClick}>here</button> for another
-            random challenge cateogry.
+            Click{" "}
+            <button className="btn btn-primary" onClick={this.handleClick}>
+              here
+            </button>{" "}
+            for another random challenge cateogry.
           </p>
         </div>
       );
     } else {
       return (
-        <div className="container">
+        <div className="container mt-4">
           <div className="row text-center">
             <h1 className="col-12">
               Which {this.state.challenge.noun} is the{" "}
@@ -72,30 +89,33 @@ class Challenge extends React.Component {
             </h1>
           </div>
           <div className="row justify-content-center">
-            <img
-              className="col-12 col-md-6"
-              alt={this.state.posts[0].title}
-              data-challenger={this.state.posts[1]._id}
-              data-challengee={this.state.posts[0]._id}
-              onClick={this.handleClick}
-              src={
-                "http://res.cloudinary.com/r8te/image/upload/c_fill,g_center,h_400,q_auto,w_400/" +
-                this.state.posts[1].cloudinaryRef +
-                ".png"
-              }
-            />
-            <img
-              className="col-12 col-md-6"
-              data-challenger={this.state.posts[0]._id}
-              data-challengee={this.state.posts[1]._id}
-              onClick={this.handleClick}
-              alt={this.state.posts[1].title}
-              src={
-                "http://res.cloudinary.com/r8te/image/upload/c_fill,g_center,h_400,q_auto,w_400/" +
-                this.state.posts[0].cloudinaryRef +
-                ".png"
-              }
-            />
+            <Challenger className="col-12 col-md-6">
+              <img
+                alt={this.state.posts[0].title}
+                data-challenger={this.state.posts[1]._id}
+                data-challengee={this.state.posts[0]._id}
+                onClick={this.handleClick}
+                src={
+                  "http://res.cloudinary.com/r8te/image/upload/c_fill,g_center,h_400,q_auto,w_400/" +
+                  this.state.posts[1].cloudinaryRef +
+                  ".png"
+                }
+              />
+            </Challenger>
+
+            <Challenger className="col-12 col-md-6">
+              <img
+                data-challenger={this.state.posts[0]._id}
+                data-challengee={this.state.posts[1]._id}
+                onClick={this.handleClick}
+                alt={this.state.posts[1].title}
+                src={
+                  "http://res.cloudinary.com/r8te/image/upload/c_fill,g_center,h_400,q_auto,w_400/" +
+                  this.state.posts[0].cloudinaryRef +
+                  ".png"
+                }
+              />
+            </Challenger>
           </div>
         </div>
       );
