@@ -6,9 +6,6 @@ const eloRank = require("elo-rank");
 const cloudinary = require("cloudinary");
 const config = require("../config.json");
 
-let winner = {};
-let loser = {};
-
 //Hoping to change this by implementing the amount of games an image has played, this ensures a more fair system.
 //K = 40, for a player new to the rating list until the completion of events with a total of 30 games, as long as their rating remains under 2300.
 //K = 20, for players with a rating always under 2400.
