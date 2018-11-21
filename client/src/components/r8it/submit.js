@@ -31,7 +31,7 @@ class Submit extends React.Component {
     const { title, description, cloudinaryRef, challengeId } = this.state;
 
     API.submitPost({
-      eloRank: 0,
+      eloRank: 1500,
       title,
       description,
       cloudinaryRef,
