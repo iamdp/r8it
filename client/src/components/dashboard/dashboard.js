@@ -3,7 +3,13 @@ import DashboardCategory from "./dashboard-category";
 
 export class Dashboard extends Component {
   render() {
-    return <DashboardCategory />;
+    return (
+      <div>
+        <DashboardCategory />
+        <DashboardCategory />
+        <DashboardCategory />
+      </div>
+    );
   }
 }
 

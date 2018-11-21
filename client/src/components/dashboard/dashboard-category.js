@@ -6,23 +6,30 @@ export class DashboardCategory extends Component {
   state = {};
 
   componentDidMount = () => {
-    axios.get("/api/getCategories").then(result => {
-      this.setState({ challenges: result.data });
+    axios.get("/api/getCategories").then(challenges => {
+      axios.get("/api/getPosts").then(posts => {
+        this.setState({ challenges: challenges.data, posts: posts.data });
+      });
     });
   };
 
   render() {
-    const { challenges } = this.state;
+    const { challenges, posts } = this.state;
 
     if (this.state.challenges) {
       return (
-        <select>
-          {challenges.map((value, index) => (
-            <option value={value._id} key={value._id}>
-              {_.startCase(value.verb) + " " + _.startCase(value.noun)}
-            </option>
+        <div>
+          <select>
+            {challenges.map((value, index) => (
+              <option value={value._id} key={value._id}>
+                {_.startCase(value.verb) + " " + _.startCase(value.noun)}
+              </option>
+            ))}
+          </select>
+          {posts.map((post, index) => (
+            <p>{post.title}</p>
           ))}
-        </select>
+        </div>
       );
     } else {
       return <div>HELLO WORLD</div>;
