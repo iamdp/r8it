@@ -1,8 +1,22 @@
-module.exports = {
-  getComparables: function(cb) {
-    fetch("/api/getComparables", (err, response) => {
-      if (err) console.log(err);
-      cb(response);
-    });
+import axios from "axios";
+
+export default {
+  getComparables: () => {
+    return axios.get("/api/getComparables");
+  },
+  saveResult: data => {
+    return axios.post("/api/saveResult", data);
+  },
+  getCategories: () => {
+    return axios.get("/api/getCategories");
+  },
+  submitPost: data => {
+    return axios.post("/api/submitPost", data);
+  },
+  uploadImage: data => {
+    return axios.post(
+      "https://api.cloudinary.com/v1_1/ocwru6tt/image/upload",
+      data
+    );
   }
 };

@@ -26,6 +26,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+<<<<<<< HEAD
   "browserslist": [
     ">0.2%",
     "not dead",
@@ -34,5 +35,16 @@
   ],
   "devDependencies": {
     "cra-universal": "^4.1.0"
+=======
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cloudinary": "^1.11.0",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.3",
+    "if-env": "^1.0.4",
+    "moment": "^2.22.2",
+    "mongoose": "^5.3.9",
+    "path": "^0.12.7"
+>>>>>>> b8e9f7f38e810b8c186b54d4d17334d2c7e29847
   }
 }

@@ -35,7 +35,7 @@ import ReactPlayer from 'react-player';
 //
 
 class Dashboard extends Component { 
-state={ I }
+state={  }
   state = {
     cardSelected: true
   };

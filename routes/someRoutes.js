@@ -6,8 +6,15 @@ router.get("/getCategories", (req, res) => {
   controller.getCategories(result => res.send(result));
 });
 
-router.get("/getPosts", (req, res) => {
-  controller.getPosts(result => res.send(result));
+router.get("/getPosts/:period?", (req, res) => {
+  /* Valid periods include 
+    '24 Hours', 'Last Week', 'Last Month', 'Last Year'
+  */
+  controller.getPosts(req.params.period, response => res.send(response));
+});
+
+router.get("/getPost/:postId", (req, res) => {
+  controller.getPost(req.params.postId, response => res.send(response));
 });
 
 router.get("/getComparables", (req, res) => {
@@ -20,6 +27,31 @@ router.post("/saveResult", (req, res) => {
       challenger: req.body.challenger,
       challengee: req.body.challengee,
       userId: req.body.userId
+    },
+    result => {
+      res.send(result);
+    }
+  );
+});
+
+router.post("/submitPost", (req, res) => {
+  //Just wanted to try object desctructuring
+  const {
+    title,
+    description: desc,
+    cloudinaryRef,
+    challengeId,
+    userId
+  } = req.body;
+
+  controller.submitPost(
+    {
+      title,
+      desc,
+      eloRank: 0,
+      cloudinaryRef,
+      challengeId,
+      userId
     },
     result => {
       res.send(result);
