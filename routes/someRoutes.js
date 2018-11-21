@@ -6,11 +6,12 @@ router.get("/getCategories", (req, res) => {
   controller.getCategories(result => res.send(result));
 });
 
-router.get("/getPosts/:period?", (req, res) => {
+router.get("/getPosts/:challengeId?/:period?", (req, res) => {
   /* Valid periods include 
     '24 Hours', 'Last Week', 'Last Month', 'Last Year'
   */
-  controller.getPosts(req.params.period, response => res.send(response));
+  const { period, challengeId } = req.params;
+  controller.getPosts({ period, challengeId }, response => res.send(response));
 });
 
 router.get("/getPost/:postId", (req, res) => {

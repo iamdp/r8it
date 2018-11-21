@@ -7,10 +7,28 @@ export class DashboardCategory extends Component {
 
   componentDidMount = () => {
     axios.get("/api/getCategories").then(challenges => {
-      axios.get("/api/getPosts").then(posts => {
-        this.setState({ challenges: challenges.data, posts: posts.data });
+      axios.get("/api/getPosts/" + challenges.data[0]._id).then(posts => {
+        this.setState({
+          challenges: challenges.data,
+          posts: posts.data,
+          challengeId: challenges.data[0]._id
+        });
       });
     });
+
+    setInterval(() => {
+      console.log(this.state.challengeId);
+    }, 60000);
+  };
+
+  updatedPosts = challengeId => {
+    axios.get("/api/getPosts/" + challengeId).then(posts => {
+      this.setState({ posts: posts.data, challengeId: challengeId });
+    });
+  };
+
+  handleChange = e => {
+    this.updatedPosts(e.target.value);
   };
 
   render() {
@@ -19,15 +37,20 @@ export class DashboardCategory extends Component {
     if (this.state.challenges) {
       return (
         <div>
-          <select>
-            {challenges.map((value, index) => (
-              <option value={value._id} key={value._id}>
-                {_.startCase(value.verb) + " " + _.startCase(value.noun)}
+          <select
+            className="custom-select custom-select-large"
+            onChange={this.handleChange}
+          >
+            {challenges.map((challenge, index) => (
+              <option value={challenge._id} key={challenge._id}>
+                {_.startCase(challenge.verb) +
+                  " " +
+                  _.startCase(challenge.noun)}
               </option>
             ))}
           </select>
           {posts.map((post, index) => (
-            <p>{post.title}</p>
+            <p key={post._id}>{post.title}</p>
           ))}
         </div>
       );
