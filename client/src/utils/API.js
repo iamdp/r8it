@@ -12,5 +12,11 @@ export default {
   },
   submitPost: data => {
     return axios.post("/api/submitPost", data);
+  },
+  getRandomChallenge: () => {
+    return axios.get("/api/getRandomChallenge");
+  },
+  submitUserChallenge: data => {
+    return axios.post("/api/submitUserChallenge", data);
   }
 };
