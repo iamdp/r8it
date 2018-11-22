@@ -8,7 +8,7 @@ router.get("/getRandomChallenge", (req, res) => {
 
 router.post("/addChallenge", (req, res) => {
   controller.addChallenge(
-    { verb: req.body.verb, noun: req.body.noun },
+    { verb: req.body.userVerb, noun: req.body.userNoun },
     result => res.send(result)
   );
 });

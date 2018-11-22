@@ -15,18 +15,21 @@ class ChallengeGenerator extends React.Component {
   };
 
   handleClick = () => {
-    API.getRandomChallenge.then(randomChallenge => {
+    API.getRandomChallenge().then(randomChallenge => {
       this.setState(randomChallenge.data);
     });
   };
 
   handleSubmit = () => {
     const { userNoun, userVerb } = this.state;
-    API.submitUserChallenge({ userNoun, userVerb });
+    API.addChallenge({ noun: userNoun, verb: userVerb });
   };
 
   handleEstablishClick = e => {
-    console.log(e.target.getAttribute("data-id"));
+    API.establishChallenge({ id: this.state.id }).then(res => {
+      this.setState({ noun: "", verb: "" });
+    });
+    // console.log(e.target.getAttribute("data-id"));
   };
 
   render() {

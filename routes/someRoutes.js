@@ -34,13 +34,6 @@ router.post("/saveResult", (req, res) => {
   );
 });
 
-router.post("/submitUserChallenge", (req, res) => {
-  const { userNoun, userVerb } = req.body;
-  controller.submitUserChallenge({ userNoun, userVerb }, result => {
-    res.send(result);
-  });
-});
-
 router.post("/submitPost", (req, res) => {
   //Just wanted to try object desctructuring
   const {
