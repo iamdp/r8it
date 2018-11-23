@@ -18,7 +18,7 @@ export class DashboardCategory extends Component {
 
     setInterval(() => {
       console.log(this.state.challengeId);
-    }, 60000);
+    }, 10000);
   };
 
   updatedPosts = challengeId => {
@@ -38,7 +38,7 @@ export class DashboardCategory extends Component {
       return (
         <div>
           <select
-            className="custom-select custom-select-large"
+            className="custom-select custom-select-large text-light bg-dark"
             onChange={this.handleChange}
           >
             {challenges.map((challenge, index) => (
@@ -50,7 +50,9 @@ export class DashboardCategory extends Component {
             ))}
           </select>
           {posts.map((post, index) => (
-            <p key={post._id}>{post.title}</p>
+            <p key={post._id}>
+              {post.title} ({post.eloRank})
+            </p>
           ))}
         </div>
       );
