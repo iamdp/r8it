@@ -49,7 +49,7 @@ module.exports = {
     });
   },
 
-  getPosts: function(period, cb) {
+  getPosts: function({ period, challengeId }, cb) {
     let query = {};
 
     if (period) {
@@ -72,11 +72,12 @@ module.exports = {
           calculatedPeriod = moment().subtract(1, "years");
           break;
       }
-      query = {
-        dateCreated: {
-          $gte: calculatedPeriod.toISOString()
-        }
-      };
+
+      query.dateCreated = { $gte: calculatedPeriod.toISOString() };
+    }
+
+    if (challengeId) {
+      query.challengeId = challengeId;
     }
 
     db.Post.find(query)

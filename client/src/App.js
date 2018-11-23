@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
+import Dashboard from "./components/dashboard/dashboard";
+
 import R8it from "./components/r8it";
 
 class App extends Component {
@@ -9,6 +11,7 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Switch>
+            <Route exact path="/dashboard" component={Dashboard} />
             <Route path="/" component={R8it} />
           </Switch>
         </div>
