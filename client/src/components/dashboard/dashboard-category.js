@@ -17,18 +17,18 @@ export class DashboardCategory extends Component {
     });
 
     setInterval(() => {
-      console.log(this.state.challengeId);
+      this.updatePosts(this.state.challengeId);
     }, 10000);
   };
 
-  updatedPosts = challengeId => {
+  updatePosts = challengeId => {
     axios.get("/api/getPosts/" + challengeId).then(posts => {
       this.setState({ posts: posts.data, challengeId: challengeId });
     });
   };
 
   handleChange = e => {
-    this.updatedPosts(e.target.value);
+    this.updatePosts(e.target.value);
   };
 
   render() {
@@ -49,15 +49,31 @@ export class DashboardCategory extends Component {
               </option>
             ))}
           </select>
-          {posts.map((post, index) => (
-            <p key={post._id}>
-              {post.title} ({post.eloRank})
-            </p>
-          ))}
+
+          <div className="card-deck mx-1">
+            {posts.slice(0, 5).map((post, index) => (
+              <div className="card" key={post._id}>
+                <img
+                  className="card-img-top img-fluid"
+                  src={
+                    "https://res.cloudinary.com/r8te/image/upload/c_fill,h_100,w_100/" +
+                    post.cloudinaryRef +
+                    ".png"
+                  }
+                  alt={post.title}
+                />
+                <div className="card-body">
+                  <h4 className="card-text">
+                    {post.title + " (" + post.eloRank + ")"}
+                  </h4>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       );
     } else {
-      return <div>HELLO WORLD</div>;
+      return <div>Loading...</div>;
     }
   }
 }
