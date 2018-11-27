@@ -171,11 +171,19 @@ module.exports = {
 
   moveUserChallenge: (challengeId, cb) => {
     dbChallenge.UserChallenge.findByIdAndDelete(challengeId, (err, res) => {
+      if (err) return console.log(err);
       const { verb, noun } = res;
       dbChallenge.Challenge.create({ verb, noun }, (err, res) => {
         if (err) return console.log(err);
         cb(res);
       });
+    });
+  },
+
+  deleteUserChallenge: (challengeId, cb) => {
+    dbChallenge.UserChallenge.findByIdAndDelete(challengeId, (err, res) => {
+      if (err) return console.log(err);
+      cb(res);
     });
   },
 

@@ -27,7 +27,9 @@ router.post("/moveUserChallenge", (req, res) => {
 });
 
 router.post("/deleteUserChallenge", (req, res) => {
-  controller.deleteUserChallenge(result => res.send(result));
+  controller.deleteUserChallenge(req.body.challengeId, result =>
+    res.send(result)
+  );
 });
 
 router.post("/createUserChallenge", (req, res) => {
