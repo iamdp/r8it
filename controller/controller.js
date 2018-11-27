@@ -147,6 +147,27 @@ module.exports = {
   // ******* Challenge Functionality *******
 
   // ******* Challenge Generator *******
+
+  addUserChallenge: function(userChallenge, cb) {
+    dbChallenge.UserChallenge.create(
+      {
+        verb: userChallenge.verb,
+        noun: userChallenge.noun
+      },
+      (err, res) => {
+        if (err) return console.log(err);
+        cb(res);
+      }
+    );
+  },
+
+  getUserChallenge: cb => {
+    dbChallenge.UserChallenge.find({}, (err, res) => {
+      if (err) return console.log(err);
+      cb(res);
+    });
+  },
+
   addChallenge: function(challenge, cb) {
     new dbChallenge.RandomChallenge({
       verb: challenge.verb,

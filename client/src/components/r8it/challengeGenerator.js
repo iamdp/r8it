@@ -4,7 +4,7 @@ import API from "../../utils/API";
 import _ from "lodash";
 
 class ChallengeGenerator extends React.Component {
-  state = { noun: "", verb: "" };
+  state = { noun: "", verb: "", userNoun: "", userVerb: "" };
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -20,9 +20,10 @@ class ChallengeGenerator extends React.Component {
     });
   };
 
-  handleSubmit = () => {
+  handleSubmit = event => {
+    event.preventDefault();
     const { userNoun, userVerb } = this.state;
-    API.addChallenge({ noun: userNoun, verb: userVerb });
+    API.createUserChallenge({ noun: userNoun, verb: userVerb });
   };
 
   handleEstablishClick = e => {
@@ -70,12 +71,12 @@ class ChallengeGenerator extends React.Component {
         <h1>Or make your own challenge!</h1>
         <form onSubmit={this.handleSubmit}>
           <label>
-            Noun:
-            <input name="userNoun" onChange={this.handleInputChange} />
-          </label>
-          <label>
             Verb:
             <input name="userVerb" onChange={this.handleInputChange} />
+          </label>
+          <label>
+            Noun:
+            <input name="userNoun" onChange={this.handleInputChange} />
           </label>
           <input type="submit" value="Submit" />
         </form>

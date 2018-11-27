@@ -4,7 +4,7 @@ const path = require("path");
 const PORT = process.env.PORT || 4000;
 const app = express();
 const bodyParser = require("body-parser");
-
+const routes = require("./routes");
 const someRoutes = require("./routes/someRoutes");
 const challengeGeneratorRoutes = require("./routes/challengeGeneratorRoutes");
 
@@ -23,6 +23,7 @@ app.use(
 // Routes
 app.use("/api", someRoutes);
 app.use("/api", challengeGeneratorRoutes);
+// app.use("/api", routes);
 
 // Send every request to the React app
 // Define any API routes before this runs

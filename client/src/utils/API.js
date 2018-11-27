@@ -13,12 +13,16 @@ export default {
   submitPost: data => {
     return axios.post("/api/submitPost", data);
   },
+  getUserChallenges: () => {
+    return axios.get("/api/getUserChallenges");
+  },
+  createUserChallenge: data => {
+    return axios.post("/api/createUserChallenge", data);
+  },
   getRandomChallenge: () => {
     return axios.get("/api/getRandomChallenge");
   },
-  addChallenge: data => {
-    return axios.post("/api/addChallenge", data);
-  },
+
   establishChallenge: data => {
     return axios.post("/api/establishChallenge", data);
   }
