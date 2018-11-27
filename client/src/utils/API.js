@@ -22,8 +22,10 @@ export default {
   getRandomChallenge: () => {
     return axios.get("/api/getRandomChallenge");
   },
-
   establishChallenge: data => {
     return axios.post("/api/establishChallenge", data);
+  },
+  deleteUserChallenge: data => {
+    return axios.post("/api/deleteUserChallenge", data);
   }
 };

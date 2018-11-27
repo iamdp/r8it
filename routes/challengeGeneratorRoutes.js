@@ -20,8 +20,8 @@ router.get("/getUserChallenges", (req, res) => {
   controller.getUserChallenge(result => res.send(result));
 });
 
-router.post("/addUserChallenge", (req, res) => {
-  controller.addUserChallenge(
+router.post("/createUserChallenge", (req, res) => {
+  controller.createUserChallenge(
     { verb: req.body.verb, noun: req.body.noun },
     result => res.send(result)
   );

@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import API from "../../utils/API";
 import _ from "lodash";
 
@@ -72,11 +71,11 @@ class ChallengeGenerator extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <label>
             Verb:
-            <input name="userVerb" onChange={this.handleInputChange} />
+            <input name="userVerb" onChange={this.handleInputChange} required />
           </label>
           <label>
             Noun:
-            <input name="userNoun" onChange={this.handleInputChange} />
+            <input name="userNoun" onChange={this.handleInputChange} required />
           </label>
           <input type="submit" value="Submit" />
         </form>

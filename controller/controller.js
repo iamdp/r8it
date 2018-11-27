@@ -148,7 +148,7 @@ module.exports = {
 
   // ******* Challenge Generator *******
 
-  addUserChallenge: function(userChallenge, cb) {
+  createUserChallenge: function(userChallenge, cb) {
     dbChallenge.UserChallenge.create(
       {
         verb: userChallenge.verb,
