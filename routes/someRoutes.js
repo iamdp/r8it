@@ -34,8 +34,6 @@ router.post("/saveResult", (req, res) => {
   );
 });
 
-router.post("/deleteUserChallenge");
-
 router.post("/submitPost", (req, res) => {
   //Just wanted to try object desctructuring
   const {

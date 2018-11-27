@@ -25,7 +25,10 @@ export default {
   establishChallenge: data => {
     return axios.post("/api/establishChallenge", data);
   },
-  deleteUserChallenge: data => {
-    return axios.post("/api/deleteUserChallenge", data);
+  deleteUserChallenge: challengeId => {
+    return axios.post("/api/deleteUserChallenge", challengeId);
+  },
+  moveUserChallenge: challengeId => {
+    return axios.post("/api/moveUserChallenge", challengeId);
   }
 };

@@ -18,6 +18,8 @@ const challengeSchema = mongoose.Schema({
   dateCreated: { type: Date, default: Date.now }
 });
 
+const Challenge = mongoose.model("Challenge", challengeSchema);
+
 //Staging model for user created models
 const userChallengeSchema = mongoose.Schema({
   verb: { type: String, required: true, trim: true, lowercase: true },
@@ -26,7 +28,5 @@ const userChallengeSchema = mongoose.Schema({
 });
 
 const UserChallenge = mongoose.model("UserChallenge", userChallengeSchema);
-
-const Challenge = mongoose.model("Challenge", challengeSchema);
 
 module.exports = { RandomChallenge, Challenge, UserChallenge };
