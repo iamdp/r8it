@@ -1,0 +1,4 @@
+{"_id":{"$oid":"5bede65ac2f12b0029f7c02f"},"verb":"warmest","noun":"coat","dateCreated":{"$date":{"$numberLong":"1542317658332"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5bede662c2f12b0029f7c030"},"verb":"funniest","noun":"look","dateCreated":{"$date":{"$numberLong":"1542317666509"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5bede668c2f12b0029f7c031"},"verb":"saddest","noun":"face","dateCreated":{"$date":{"$numberLong":"1542317672531"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5bede671c2f12b0029f7c032"},"verb":"coolest","noun":"doodle","dateCreated":{"$date":{"$numberLong":"1542317681457"}},"__v":{"$numberInt":"0"}}

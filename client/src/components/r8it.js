@@ -8,6 +8,7 @@ import PostList from "./r8it/review-list";
 import Submit from "./r8it/submit";
 import ChallengeGenerator from "./r8it/challengeGenerator";
 import Categories from "./r8it/categories";
+import Admin from "./r8it/admin";
 
 const Logo = styled.img`
   height: 30px;
@@ -71,6 +72,7 @@ class r8it extends React.Component {
         <Route exact path="/compete" component={Submit} />
         <Route exact path="/create" component={ChallengeGenerator} />
         <Route exact path="/category" component={Categories} />
+        <Route exact path="/SuperSecretAdminPage" component={Admin} />
       </div>
     );
   }

@@ -31,14 +31,11 @@ class Submit extends React.Component {
     const { title, description, cloudinaryRef, challengeId } = this.state;
 
     API.submitPost({
-      eloRank: 1500,
       title,
       description,
       cloudinaryRef,
       challengeId,
       userId
-    }).then(res => {
-      // console.log(res);
     });
   };
 
@@ -86,8 +83,6 @@ class Submit extends React.Component {
         }
       },
       (error, result) => {
-        // console.log(result);
-
         if (result && result.event === "success") {
           this.setState({
             cloudinaryRef: result.info.public_id,

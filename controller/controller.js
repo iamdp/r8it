@@ -30,6 +30,7 @@ function getCloudinaryUrl(cloudinaryRef) {
   );
 }
 
+// Calculates Elo
 const calculateWinner = (winner, loser) => {
   let expectedScore = elo.getExpected(winner.eloRank, loser.eloRank);
   let newScore = elo.updateRating(expectedScore, 1, winner.eloRank);
@@ -148,6 +149,45 @@ module.exports = {
   // ******* Challenge Functionality *******
 
   // ******* Challenge Generator *******
+
+  createUserChallenge: (userChallenge, cb) => {
+    dbChallenge.UserChallenge.create(
+      {
+        verb: userChallenge.verb,
+        noun: userChallenge.noun
+      },
+      (err, res) => {
+        if (err) return console.log(err);
+        cb(res);
+      }
+    );
+  },
+
+  getUserChallenge: cb => {
+    dbChallenge.UserChallenge.find({}, (err, res) => {
+      if (err) return console.log(err);
+      cb(res);
+    });
+  },
+
+  moveUserChallenge: (challengeId, cb) => {
+    dbChallenge.UserChallenge.findByIdAndDelete(challengeId, (err, res) => {
+      if (err) return console.log(err);
+      const { verb, noun } = res;
+      dbChallenge.Challenge.create({ verb, noun }, (err, res) => {
+        if (err) return console.log(err);
+        cb(res);
+      });
+    });
+  },
+
+  deleteUserChallenge: (challengeId, cb) => {
+    dbChallenge.UserChallenge.findByIdAndDelete(challengeId, (err, res) => {
+      if (err) return console.log(err);
+      cb(res);
+    });
+  },
+
   addChallenge: function(challenge, cb) {
     new dbChallenge.RandomChallenge({
       verb: challenge.verb,
@@ -184,7 +224,7 @@ module.exports = {
 
   submitPost: (postData, cb) => {
     db.Post.create(postData, (err, res) => {
-      if (err) return handleError(err);
+      if (err) return console.log(err);
       console.log(res);
       cb(res);
     });

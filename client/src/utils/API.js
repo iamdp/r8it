@@ -12,5 +12,23 @@ export default {
   },
   submitPost: data => {
     return axios.post("/api/submitPost", data);
+  },
+  getUserChallenges: () => {
+    return axios.get("/api/getUserChallenges");
+  },
+  createUserChallenge: data => {
+    return axios.post("/api/createUserChallenge", data);
+  },
+  getRandomChallenge: () => {
+    return axios.get("/api/getRandomChallenge");
+  },
+  establishChallenge: data => {
+    return axios.post("/api/establishChallenge", data);
+  },
+  deleteUserChallenge: challengeId => {
+    return axios.post("/api/deleteUserChallenge", challengeId);
+  },
+  moveUserChallenge: challengeId => {
+    return axios.post("/api/moveUserChallenge", challengeId);
   }
 };

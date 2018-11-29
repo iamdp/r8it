@@ -14,7 +14,7 @@ const User = mongoose.model("User", userSchema);
 const postSchema = mongoose.Schema({
   title: { type: String, required: true, trim: true },
   desc: { type: String, required: true, trim: true },
-  eloRank: { type: Number, required: true, default: 32 },
+  eloRank: { type: Number, default: 1500 },
   cloudinaryRef: { type: String, required: true },
   challengeId: {
     type: mongoose.Types.ObjectId,
