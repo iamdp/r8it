@@ -37,7 +37,6 @@ class Submit extends React.Component {
       challengeId,
       userId
     });
-    this.setState({ title: "", description: "", cloudinaryRef: "" });
   };
 
   handleInputChange = event => {
@@ -84,8 +83,6 @@ class Submit extends React.Component {
         }
       },
       (error, result) => {
-        // console.log(result);
-
         if (result && result.event === "success") {
           this.setState({
             cloudinaryRef: result.info.public_id,

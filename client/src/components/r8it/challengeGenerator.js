@@ -29,7 +29,6 @@ class ChallengeGenerator extends React.Component {
     API.establishChallenge({ id: this.state.id }).then(res => {
       this.setState({ noun: "", verb: "" });
     });
-    // console.log(e.target.getAttribute("data-id"));
   };
 
   render() {
