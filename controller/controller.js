@@ -223,7 +223,7 @@ module.exports = {
 
   submitPost: (postData, cb) => {
     db.Post.create(postData, (err, res) => {
-      if (err) return handleError(err);
+      if (err) return console.log(err);
       console.log(res);
       cb(res);
     });

@@ -31,15 +31,13 @@ class Submit extends React.Component {
     const { title, description, cloudinaryRef, challengeId } = this.state;
 
     API.submitPost({
-      eloRank: 1500,
       title,
       description,
       cloudinaryRef,
       challengeId,
       userId
-    }).then(res => {
-      // console.log(res);
     });
+    this.setState({ title: "", description: "", cloudinaryRef: "" });
   };
 
   handleInputChange = event => {

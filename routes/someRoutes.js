@@ -48,7 +48,6 @@ router.post("/submitPost", (req, res) => {
     {
       title,
       desc,
-      eloRank: 0,
       cloudinaryRef,
       challengeId,
       userId
