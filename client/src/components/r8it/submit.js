@@ -1,5 +1,6 @@
 import React from "react";
 import API from "../../utils/API";
+import { ClipLoader } from "react-spinners";
 import _ from "lodash";
 
 class Submit extends React.Component {
@@ -8,7 +9,8 @@ class Submit extends React.Component {
     title: "",
     description: "",
     cloudinaryRef: "",
-    challengeId: ""
+    challengeId: "",
+    loading: false
   };
 
   componentDidMount = () => {
@@ -23,6 +25,9 @@ class Submit extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    this.setState({
+      loading: true
+    });
 
     let userId = this.state.userId
       ? this.state.userId
@@ -36,6 +41,15 @@ class Submit extends React.Component {
       cloudinaryRef,
       challengeId,
       userId
+    }).then((err, res) => {
+      if (err) console.log("theres an error");
+      this.setState({
+        title: "",
+        description: "",
+        cloudinaryRef: "",
+        thumbnail_url: "",
+        loading: false
+      });
     });
   };
 
@@ -95,65 +109,80 @@ class Submit extends React.Component {
   };
 
   render() {
+    const loading = this.state.loading;
     return (
       <div className="container mt-5">
-        <form onSubmit={this.handleSubmit}>
-          <h1>Submit a Post</h1>
-          <h2>Feel like you have what it takes to be #1?</h2>
-          <ol>
-            <li>
-              <h3>Select a category to compete in:</h3>
-              {/* Loop through the challenges and create an 'options' for each */}
-              {this.state.challenges ? (
-                <select name="challengeId" onChange={this.handleInputChange}>
-                  {this.state.challenges.map(challenge => {
-                    return (
-                      <option key={challenge._id} value={challenge._id}>
-                        {_.startCase([challenge.verb]) +
-                          " " +
-                          _.startCase([challenge.noun])}
-                      </option>
-                    );
-                  })}
-                </select>
-              ) : null}
-            </li>
-            <li>
-              <h3>Pick a picture to submit:</h3>
-              <button className="btn btn-primary" onClick={this.uploadWidget}>
-                Select a picture
-              </button>
-              {this.state.thumbnail_url ? (
-                <img src={this.state.thumbnail_url} alt="Upload preview" />
-              ) : null}
-            </li>
-            <li>
-              <h3>Title the image with a creative name:</h3>
-              <input
-                type="text"
-                placeholder="Title"
-                name="title"
-                required
-                onChange={this.handleInputChange}
-              />
-            </li>
-            <li>
-              <h3>Add a description:</h3>
-              <textarea
-                placeholder="Description"
-                name="description"
-                rows="5"
-                cols="40"
-                required
-                onChange={this.handleInputChange}
-              />
-            </li>
-            <li>
-              <h3>Your done, click submit</h3>
-              <input type="submit" value="Submit" />
-            </li>
-          </ol>
-        </form>
+        {loading ? (
+          <div className="sweet-loading">
+            <ClipLoader
+              loading={this.state.loading}
+              color="#000000"
+              className=""
+            />
+          </div>
+        ) : (
+          <form onSubmit={this.handleSubmit} id="submitForm">
+            <h1>Submit a Post</h1>
+            <h2>Feel like you have what it takes to be #1?</h2>
+
+            <ul style={{ listStyleType: "none" }}>
+              <li className="my-3">
+                <h3>Select a category to compete in:</h3>
+                {/* Loop through the challenges and create an 'options' for each */}
+                {this.state.challenges ? (
+                  <select name="challengeId" onChange={this.handleInputChange}>
+                    {this.state.challenges.map(challenge => {
+                      return (
+                        <option key={challenge._id} value={challenge._id}>
+                          {_.startCase([challenge.verb]) +
+                            " " +
+                            _.startCase([challenge.noun])}
+                        </option>
+                      );
+                    })}
+                  </select>
+                ) : null}
+              </li>
+              <li className="my-3">
+                <h3>Pick a picture to submit:</h3>
+                <input
+                  type="button"
+                  value="Select a picture"
+                  className="btn btn-primary"
+                  onClick={this.uploadWidget}
+                />
+                {this.state.thumbnail_url ? (
+                  <img src={this.state.thumbnail_url} alt="Upload preview" />
+                ) : null}
+              </li>
+              <li className="my-3">
+                <h3>Title the image with a creative name:</h3>
+                <input
+                  type="text"
+                  placeholder="Title"
+                  name="title"
+                  required
+                  onChange={this.handleInputChange}
+                />
+              </li>
+              <li className="my-3">
+                <h3>Add a description:</h3>
+                <textarea
+                  placeholder="Description"
+                  name="description"
+                  rows="5"
+                  cols="40"
+                  required
+                  onChange={this.handleInputChange}
+                />
+              </li>
+              <li className="my-3">
+                <h3>Your done, click submit</h3>
+                <input type="submit" value="Submit" />
+              </li>
+            </ul>
+          </form>
+        )}
       </div>
     );
   }
