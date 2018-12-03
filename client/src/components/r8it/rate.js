@@ -33,20 +33,29 @@ class Challenge extends React.Component {
       ? this.state.userId
       : "5be04cee9971c8c18da3c1cc";
 
-    API.saveResult({
-      challenger: event.target.getAttribute("data-challenger"),
-      challengee: event.target.getAttribute("data-challengee"),
-      userId
-    })
-      .then(() => {
-        API.getComparables()
-          .then(response => {
-            console.log(response);
-            this.setState(response.data);
-          })
-          .catch(err => console.log(err));
+    if (!this.state.posts || this.state.posts.length <= 1) {
+      API.getComparables()
+        .then(response => {
+          // console.log(response);
+          this.setState(response.data);
+        })
+        .catch(err => console.log(err));
+    } else {
+      API.saveResult({
+        challenger: event.target.getAttribute("data-challenger"),
+        challengee: event.target.getAttribute("data-challengee"),
+        userId
       })
-      .catch(err => console.log(err));
+        .then(() => {
+          API.getComparables()
+            .then(response => {
+              // console.log(response);
+              this.setState(response.data);
+            })
+            .catch(err => console.log(err));
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   render() {
